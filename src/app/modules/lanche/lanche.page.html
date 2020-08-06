@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button text="" style="display: block;"></ion-back-button>
+    </ion-buttons>
+    <ion-title>lanche</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <header id="header-lanche">
+    <img src="assets/img/xbacon.jpg">
+    <main id="textos-lanche">
+      <h2 class="lanche-nome">Porkão Costela</h2>
+      <p class="lanche-desc">Lorem ipsum dolor sit ametLorem ipsum dolor sit ametLorem ipsum dolor sit ametLorem ipsum
+        dolor sit amet </p>
+    </main>
+  </header>
+
+  <main>
+    <section class="section-opcao" id="section-ingredientes">
+      <header class="header-opcao" id="header-ingredientes">
+        <h6>Ingredientes adicionais</h6>
+        <div id="badge-ingredientes">
+          0/20
+        </div>
+      </header>
+
+      <main>
+        <ion-list>
+          <ion-item class="item-ingrediente" *ngFor="let ingrediente of ingredientes" lines="none">
+            <div class="div-info-ingrediente">
+              <p class="ingrediente-nome">{{ingrediente.nome}}</p>
+              <p class="ingrediente-valor">
+                + {{ingrediente.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}</p>
+            </div>
+            <div class="div-adicionar">
+              <button class="btn-adicionar-ingrediente">Adicionar</button>
+            </div>
+          </ion-item>
+        </ion-list>
+      </main>
+    </section>
+    <section id="section-observacoes">
+      <header class="header-opcao" id="header-observacoes">
+        <h6>Observações</h6>
+      </header>
+      <main>
+        <ion-textarea id="textarea-observacoes"></ion-textarea>
+      </main>
+    </section>
+  </main>
+
+  <footer id="footer-btn">
+    <button id="btn-adicionar-carrinho">Adicionar ao carrinho</button>
+  </footer>
+</ion-content>

@@ -4,7 +4,15 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+    loadChildren: () => import('./modules/tabs/tabs.module').then(m => m.TabsPageModule)
+  },
+  {
+    path: 'lanche/:id',
+    loadChildren: () => import('./modules/lanche/lanche.module').then(m => m.LanchePageModule)
+  },
+  {
+    path: 'carrinho',
+    loadChildren: () => import('./modules/carrinho/carrinho.module').then( m => m.CarrinhoPageModule)
   }
 ];
 @NgModule({
@@ -13,4 +21,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

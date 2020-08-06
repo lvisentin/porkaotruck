@@ -1,0 +1,63 @@
+ion-content {
+    --background: rgba(232, 232, 232);
+}
+#header-carrinho {
+    display: flex;
+    align-items: center;
+    padding: 20px 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    background: white;
+    #icon-entrega {
+        width: 20%;
+    }
+
+    #info-entrega {
+        width: 80%;
+        #title-entrega {
+            font-size: 13px;
+            color: black;
+            font-weight: 400;
+            margin: 0;
+            margin-bottom: 10px;
+
+            #subtitle {
+                font-size: 12px;
+            }
+        }
+
+        #badges-entrega {
+            display: flex;
+            align-items: center;
+
+            .badge {
+                height: 20px;
+                border: 1px solid #b1b1b1;
+                color: #858585;
+                border-radius: 5px;
+                display: flex;
+                align-items: center;
+                padding: 5px;
+                margin-right: 10px;
+                p {
+                    margin: 0;
+                    font-size: 11px;
+                }
+            }
+        }
+    }
+}
+
+#section-conteudo-carrinho {
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    margin-top: 10px;
+    padding: 0 20px;
+    background: white;
+    header {
+        padding: 15px 0;
+        h6 {
+            margin: 0;
+            font-weight: bold;
+        }
+    }
+}

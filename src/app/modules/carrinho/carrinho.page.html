@@ -1,9 +1,39 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>carrinho</ion-title>
+  <ion-toolbar color="dark">
+    <ion-title>Carrinho</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <header id="header-carrinho">
+    <aside id="icon-entrega">
+      <img src="assets/img/maps.png" width="48">
+    </aside>
+    <aside id="info-entrega">
+      <p id="title-entrega">
+        <span id="subtitle">Entregar em: </span><br>
+        <span>Hércules Francischinni, 519</span>
+      </p>
+      <div id="badges-entrega">
+        <div class="badge">
+          <ion-icon name="bicycle-outline"></ion-icon>
+          <p><span>30-40 </span>MIN.</p>
+        </div>
+        <div class="badge">
+          <p>ENTREGA<span>R$4,99 </span></p>
+        </div>
+      </div>
+    </aside>
+  </header>
 
+  <main>
+    <section id="section-conteudo-carrinho">
+      <header>
+        <h6>Porkão Truck</h6>
+      </header>
+      <main id="list-itens-carrinho">
+        <ion-list *ngFor="let item of carrinho"></ion-list>
+      </main>
+    </section>
+  </main>
 </ion-content>

@@ -60,4 +60,110 @@ ion-content {
             font-weight: bold;
         }
     }
+
+    #list-itens-carrinho {
+        .carrinho-item {
+            .carrinho-item-nome {
+                font-weight: 400;
+                font-size: 14px;
+            }
+            .carrinho-item-opt {
+                margin-right: 0px;
+                justify-content: space-between;
+                display: flex;
+                align-items: center;
+                p {
+                    font-size: 14px;
+                }
+
+                .carrinho-item-valor {
+                    font-weight: bold;
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+
+    #subtotal-carrinho {
+        margin-top: 20px;
+        margin-bottom: 10px;
+        .row-subtotal-carrinho {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            p {
+                margin-bottom: 10px;
+                margin-top: 0px;
+                font-size: 14px;
+            }
+        }
+        #row-total {
+            margin-top: 5px;
+            p {
+                font-size: 16px;
+                font-weight: bold;
+            }
+        }
+    }
+}
+
+#section-cupom {
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    margin-top: 10px;
+    padding: 0 20px 20px;
+    background: white;
+    margin-bottom: 20px;
+    h6 {
+        font-weight: bold;
+    }
+    #content-cupom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        #input-cupom {
+            border-radius: 5px;
+            padding: 5px;
+            border: 1px solid rgba(0, 0, 0, 0.4);
+            font-size: 14px;
+            width: 100%;
+        }
+        #btn-aplicar-cupom {
+            background: #4e4e4e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            height: 30px;
+            width: 100%;
+        }
+    }
+}
+
+#section-pagamento {
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    margin-top: 10px;
+    // padding: 0 20px 20px;
+    background: white;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    h6 {
+        padding-left: 15px;
+        font-weight: bold;
+    }
+}
+
+#section-btn-finalizar {
+    width: 100%;
+    padding: 10px;
+    background: white;
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    #btn-finalizar {
+        background: #4e4e4e;
+        color: white;
+        border-radius: 5px;
+        width: 100%;
+        height: 40px;
+    }
 }

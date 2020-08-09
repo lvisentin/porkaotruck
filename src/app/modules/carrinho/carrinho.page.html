@@ -32,8 +32,62 @@
         <h6>Porkão Truck</h6>
       </header>
       <main id="list-itens-carrinho">
-        <ion-list *ngFor="let item of carrinho"></ion-list>
+        <ion-list *ngFor="let item of carrinho.itens">
+          <ion-item class="ion-no-padding carrinho-item">
+            <p class="carrinho-item-nome">{{item.qtd}}x - {{item.nome}}</p>
+            <div class="carrinho-item-opt" slot="end">
+              <p class="carrinho-item-valor">
+                {{item.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}
+              </p>
+              <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+            </div>
+          </ion-item>
+        </ion-list>
+        <footer id="subtotal-carrinho">
+          <div id="row-subtotal" class="row-subtotal-carrinho">
+            <p>Subtotal</p>
+            <p>{{carrinho.subtotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}</p>
+          </div>
+          <div id="row-taxa-entrega" class="row-subtotal-carrinho">
+            <p>Taxa de Entrega</p>
+            <p>{{carrinho.taxaEntrega.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}</p>
+          </div>
+          <div id="row-total" class="row-subtotal-carrinho">
+            <p>Total</p>
+            <p>{{carrinho.total.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}</p>
+          </div>
+        </footer>
       </main>
+    </section>
+
+    <section id="section-cupom">
+      <h6>Cupom</h6>
+      <div id="content-cupom">
+        <div style="width: 70%;">
+          <input id="input-cupom" placeholder="Digite aqui um cupom de desconto">
+        </div>
+        <div style="width: 25%;">
+          <button id="btn-aplicar-cupom">Aplicar</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-pagamento">
+      <h6> Pagamento </h6>
+      <ion-radio-group mode="md">
+        <ion-item lines="none">
+          <ion-label>Cartão</ion-label>
+          <ion-radio value="cartao"></ion-radio>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label>Dinheiro</ion-label>
+          <ion-radio value="dinheiro"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </section>
+
+    <section id="section-btn-finalizar">
+      <button id="btn-finalizar">Finalizar Pedido</button>
     </section>
   </main>
 </ion-content>

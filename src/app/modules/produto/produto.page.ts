@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Ingrediente } from 'src/app/interfaces/ingrediente';
 
 @Component({
-  selector: 'app-lanche',
-  templateUrl: './lanche.page.html',
-  styleUrls: ['./lanche.page.scss'],
+  selector: 'app-produto',
+  templateUrl: './produto.page.html',
+  styleUrls: ['./produto.page.scss'],
 })
-export class LanchePage implements OnInit {
+export class ProdutoPage implements OnInit {
 
   public ingredientes: Array<Ingrediente> = [
     {

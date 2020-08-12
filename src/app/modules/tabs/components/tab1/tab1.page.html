@@ -53,24 +53,25 @@
 
       <section class="opcoes-categoria">
         <ion-list>
-          <ion-item class="item" lines="none" *ngFor="let lanche of lanches" routerLink="/lanche/{{lanche.id}}"
+          <ion-item class="item" lines="none" *ngFor="let produto of produtos" routerLink="/produto/{{produto.id}}"
             detail="false">
             <aside style="width: 60%;">
               <header>
-                <h3 class="item-title">{{lanche.nome}}</h3>
+                <h3 class="item-title">{{produto.nome}}</h3>
               </header>
               <main>
                 <p class="item-desc">
-                  {{lanche.descricao}}
+                  {{produto.descricao}}
                 </p>
               </main>
               <footer>
-                <h3 class="item-price">{{lanche.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}
+                <h3 class="item-price">
+                  {{produto.preco[0].preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}
                 </h3>
               </footer>
             </aside>
             <aside style="width: 40%;">
-              <img [src]="lanche.imagem">
+              <img [src]="produto.url_image">
             </aside>
           </ion-item>
         </ion-list>

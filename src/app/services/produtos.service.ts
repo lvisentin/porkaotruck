@@ -18,10 +18,10 @@ export class ProdutosService {
     const route = `${this.apiUrl}/produto/search`;
     const params = {
       filter: {},
-      fields: { preco: ["preco"] },
+      fields: { preco: ['preco'] },
       paginate: 5,
       page: 1
-    }
+    };
     return this.httpClient.post(route, params);
   }
 }

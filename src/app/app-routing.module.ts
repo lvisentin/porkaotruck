@@ -13,7 +13,11 @@ const routes: Routes = [
   {
     path: 'carrinho',
     loadChildren: () => import('./modules/carrinho/carrinho.module').then(m => m.CarrinhoPageModule)
+  },  {
+    path: 'login',
+    loadChildren: () => import('./modules/login/login.module').then( m => m.LoginPageModule)
   }
+
 ];
 @NgModule({
   imports: [

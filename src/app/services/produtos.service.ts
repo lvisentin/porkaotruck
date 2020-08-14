@@ -21,7 +21,7 @@ export class ProdutosService {
       fields: fields,
       paginate: 5,
       page: 1
-    }
+    };
     return this.httpClient.post(route, params);
   }
 

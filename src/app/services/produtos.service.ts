@@ -14,14 +14,19 @@ export class ProdutosService {
     private httpClient: HttpClient
   ) { }
 
-  getProdutos(): Observable<any> {
+  getProdutos(filter = null, fields = null): Observable<any> {
     const route = `${this.apiUrl}/produto/search`;
     const params = {
       filter: {},
-      fields: { preco: ["preco"] },
+      fields: fields,
       paginate: 5,
       page: 1
     }
     return this.httpClient.post(route, params);
+  }
+
+  getProduto(productId) {
+    const route = `${this.apiUrl}/produto/${productId}`;
+    return this.httpClient.get(route);
   }
 }

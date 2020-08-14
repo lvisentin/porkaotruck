@@ -4,7 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="carrinho">
   <header id="header-carrinho">
     <aside id="icon-entrega">
       <img src="assets/img/maps.png" width="48">
@@ -37,9 +37,11 @@
             <p class="carrinho-item-nome">{{item.qtd}}x - {{item.nome}}</p>
             <div class="carrinho-item-opt" slot="end">
               <p class="carrinho-item-valor">
-                {{item.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}
+                {{item.preco[0].preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}
               </p>
-              <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+              <a (click)="presentPopover($ev)">
+                <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+              </a>
             </div>
           </ion-item>
         </ion-list>
@@ -74,7 +76,7 @@
 
     <section id="section-pagamento">
       <h6> Pagamento </h6>
-      <ion-radio-group mode="md">
+      <ion-radio-group [(ngModel)]="metodoPagamento" mode="md">
         <ion-item lines="none">
           <ion-label>Cartão</ion-label>
           <ion-radio value="cartao"></ion-radio>
@@ -87,7 +89,7 @@
     </section>
 
     <section id="section-btn-finalizar">
-      <button id="btn-finalizar">Finalizar Pedido</button>
+      <button id="btn-finalizar" (click)="finalizaPedido()">Finalizar Pedido</button>
     </section>
   </main>
 </ion-content>

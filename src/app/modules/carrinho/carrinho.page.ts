@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
+import { PopoverCarrinhoComponent } from 'src/app/shared/popover/popover-carrinho/popover-carrinho.component';
 
 @Component({
   selector: 'app-carrinho',
@@ -7,38 +9,69 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CarrinhoPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private popoverController: PopoverController
+  ) { }
 
-  public carrinho = {
-    itens: [
-      {
-        id: 1,
-        nome: 'Porkão costela',
-        descricao: 'teste',
-        valor: 24.90,
-        qtd: 3
-      },
-      {
-        id: 2,
-        nome: 'Porkão costela',
-        descricao: 'teste',
-        valor: 24.90,
-        qtd: 2
-      },
-      {
-        id: 3,
-        nome: 'Porkão costela',
-        descricao: 'teste',
-        valor: 24.90,
-        qtd: 1
-      }
-    ],
-    subtotal: 24.90,
-    taxaEntrega: 5,
-    total: 29.9
-  }
+  public carrinho;
+  public metodoPagamento: string;
 
   ngOnInit() {
+    this.setCarrinho();
+
   }
 
+  setCarrinho() {
+    this.carrinho = JSON.parse(localStorage.getItem('carrinho'));
+    console.log(this.carrinho)
+  }
+
+  async presentPopover(ev: any) {
+    console.log('ev', ev)
+    const popover = await this.popoverController.create({
+      component: PopoverCarrinhoComponent,
+      cssClass: 'popover-carrinho',
+      event: ev,
+      translucent: false
+    })
+
+    return await popover.present();
+  }
+
+  finalizaPedido() {
+    console.log(this.metodoPagamento)
+    this.carrinho.itens.forEach((value, index) => {
+
+    })
+    const pedido = {
+      "idusuario": 10,
+      "itens": [
+        {
+          "idproduto": 1,
+          "quantidade": 1,
+          "vltotal": 15,
+          "vlsubtotal": 5,
+          "vladicional": 10,
+          "adicionais": [
+            {
+              "idadicional": 2,
+              "quantidade": 1,
+              "vltotal": 10,
+              "vlsubtotal": 10
+            }
+          ]
+        },
+        {
+          "idproduto": 2,
+          "quantidade": 2,
+          "vltotal": 20,
+          "vlsubtotal": 20
+        }
+      ],
+      "vltotal": 40,
+      "vlsubtotal": 35,
+      "vltaxa_entrega": 5,
+      "idforma_pagamento": 1
+    }
+  }
 }

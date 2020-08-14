@@ -22,28 +22,30 @@ export class Tab1Page {
 
   public categoriaSelecionada: number;
 
-  public combos: Combo[] = [
-    {
-      nome: 'Porkão bacon',
-      src: 'assets/img/xbacon.jpg'
-    },
-    {
-      nome: 'Porkão bacon',
-      src: 'assets/img/xbacon.jpg'
-    },
-    {
-      nome: 'Porkão bacon',
-      src: 'assets/img/xbacon.jpg'
-    },
-    {
-      nome: 'Porkão bacon',
-      src: 'assets/img/xbacon.jpg'
-    }
-  ];
+  // public combos: Combo[] = [
+  //   {
+  //     nome: 'Porkão bacon',
+  //     src: 'assets/img/xbacon.jpg'
+  //   },
+  //   {
+  //     nome: 'Porkão bacon',
+  //     src: 'assets/img/xbacon.jpg'
+  //   },
+  //   {
+  //     nome: 'Porkão bacon',
+  //     src: 'assets/img/xbacon.jpg'
+  //   },
+  //   {
+  //     nome: 'Porkão bacon',
+  //     src: 'assets/img/xbacon.jpg'
+  //   }
+  // ];
 
+
+  public combos: Produto[];
 
   public categorias: Categoria[];
-
+  public categoriasShowable: Categoria[];
   // public produtos: Lanche[] = [
   //   {
   //     id: 1,
@@ -116,6 +118,7 @@ export class Tab1Page {
   ionViewDidEnter() {
     this.categoriaSelecionada = 1;
     this.getCategorias();
+    this.getCombos();
   }
 
   selectCategoria(categoria) {
@@ -123,38 +126,24 @@ export class Tab1Page {
   }
 
   getCategorias() {
-    this.categoriasService.getCategorias().subscribe(
+    const fields = { "produtos": ["nome", "descricao", "url_image"] };
+    const filter = { "showable": true }
+    this.categoriasService.getCategorias(filter, fields).subscribe(
       (data) => {
         const categorias = data['data'].data;
-        console.log('categorias', categorias)
         this.categorias = categorias;
-        this.getProdutos();
+        console.log(this.categorias)
       }
     )
   }
 
-  getProdutos() {
-    this.produtosService.getProdutos().subscribe(
+  getCombos() {
+    const filter = { "categoria": 31 };
+    this.produtosService.getProdutos(filter).subscribe(
       (data) => {
-        const produtos: Array<Produto> = data['data'].data;
-        this.produtos = produtos;
-
-        const arrCat = [];
-        this.categorias.forEach((categoria, i1) => {
-          const catObj = {
-            categoria: categoria,
-            content: []
-          }
-          produtos.filter(produto => {
-            if (produto.idcategoria == categoria.id) {
-              catObj.content.push(produto);
-            }
-          })
-
-          arrCat.push(catObj);
-        })
-        this.grupoProduto = arrCat;
-        console.log(this.grupoProduto)
+        const combos: Array<Produto> = data['data'].data;
+        this.combos = combos;
+        console.log(combos)
       }
     )
   }

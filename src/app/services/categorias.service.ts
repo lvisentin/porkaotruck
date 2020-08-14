@@ -13,10 +13,11 @@ export class CategoriasService {
     private httpClient: HttpClient
   ) { }
 
-  getCategorias() {
+  getCategorias(filter = null, fields = null) {
     const route = `${this.apiUrl}/categoria/search`;
     const params = {
-      filter: '',
+      filter: filter,
+      fields: fields,
       paginate: 10,
       page: 1
     }

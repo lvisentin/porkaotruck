@@ -8,5 +8,6 @@ export interface Produto {
     valor: number;
     url_image: string;
     qtd?: number;
-    preco;
+    preco: number;
+    adicionais?: Array<Produto>;
 }

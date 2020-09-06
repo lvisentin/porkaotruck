@@ -4,92 +4,108 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="carrinho">
-  <header id="header-carrinho">
-    <aside id="icon-entrega">
-      <img src="assets/img/maps.png" width="48">
-    </aside>
-    <aside id="info-entrega">
-      <p id="title-entrega">
-        <span id="subtitle">Entregar em: </span><br>
-        <span>Hércules Francischinni, 519</span>
-      </p>
-      <div id="badges-entrega">
-        <div class="badge">
-          <ion-icon name="bicycle-outline"></ion-icon>
-          <p><span>30-40 </span>MIN.</p>
+<ion-content>
+  <ng-container *ngIf="carrinho.itens.length > 0; else carrinhoVazio">
+    <header id="header-carrinho">
+      <aside id="icon-entrega">
+        <img src="assets/img/maps.png" width="48">
+      </aside>
+      <aside id="info-entrega">
+        <p id="title-entrega">
+          <span id="subtitle">Entregar em: </span><br>
+          <span>Hércules Francischinni, 519</span>
+        </p>
+        <div id="badges-entrega">
+          <div class="badge">
+            <ion-icon name="bicycle-outline"></ion-icon>
+            <p><span>30-40 </span>MIN.</p>
+          </div>
+          <div class="badge">
+            <p>ENTREGA<span>R$4,99 </span></p>
+          </div>
         </div>
-        <div class="badge">
-          <p>ENTREGA<span>R$4,99 </span></p>
-        </div>
-      </div>
-    </aside>
-  </header>
+      </aside>
+    </header>
 
-  <main>
-    <section id="section-conteudo-carrinho">
-      <header>
-        <h6>Porkão Truck</h6>
-      </header>
-      <main id="list-itens-carrinho">
-        <ion-list *ngFor="let item of carrinho.itens">
-          <ion-item class="ion-no-padding carrinho-item">
-            <p class="carrinho-item-nome">{{item.qtd}}x - {{item.nome}}</p>
-            <div class="carrinho-item-opt" slot="end">
-              <p class="carrinho-item-valor">
-                {{item.preco[0].preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}
-              </p>
-              <a (click)="presentPopover($ev)">
-                <ion-icon name="ellipsis-vertical-outline"></ion-icon>
-              </a>
+    <main>
+      <section id="section-conteudo-carrinho">
+        <header>
+          <h6>Porkão Truck</h6>
+        </header>
+        <main id="list-itens-carrinho">
+          <ion-list *ngFor="let item of carrinho.itens">
+            <ion-item class="ion-no-padding carrinho-item">
+              <p class="carrinho-item-nome">{{item.qtd}}x - {{item.nome}}</p>
+              <div class="carrinho-item-opt" slot="end">
+                <p class="carrinho-item-valor">
+                  {{item.preco[0].preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}
+                </p>
+                <a (click)="presentPopoverOpt($ev)">
+                  <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+                </a>
+              </div>
+            </ion-item>
+          </ion-list>
+          <footer id="subtotal-carrinho">
+            <div id="row-subtotal" class="row-subtotal-carrinho">
+              <p>Subtotal</p>
+              <p>{{carrinho.subtotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}</p>
             </div>
+            <div id="row-taxa-entrega" class="row-subtotal-carrinho">
+              <p>Taxa de Entrega</p>
+              <p>{{carrinho.taxaEntrega.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}</p>
+            </div>
+            <div id="row-total" class="row-subtotal-carrinho">
+              <p>Total</p>
+              <p>{{carrinho.total.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}</p>
+            </div>
+          </footer>
+        </main>
+      </section>
+
+      <section id="section-cupom">
+        <h6>Cupom</h6>
+        <div id="content-cupom">
+          <div style="width: 70%;">
+            <input id="input-cupom" placeholder="Digite aqui um cupom de desconto">
+          </div>
+          <div style="width: 25%;">
+            <button id="btn-aplicar-cupom">Aplicar</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="section-pagamento">
+        <h6> Pagamento </h6>
+        <ion-radio-group [(ngModel)]="metodoPagamento" mode="md">
+          <ion-item lines="none" *ngFor="let metodo of metodosPgto">
+            <ion-label>{{metodo.nome}}</ion-label>
+            <ion-radio [value]="metodo.id"></ion-radio>
           </ion-item>
-        </ion-list>
-        <footer id="subtotal-carrinho">
-          <div id="row-subtotal" class="row-subtotal-carrinho">
-            <p>Subtotal</p>
-            <p>{{carrinho.subtotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}</p>
-          </div>
-          <div id="row-taxa-entrega" class="row-subtotal-carrinho">
-            <p>Taxa de Entrega</p>
-            <p>{{carrinho.taxaEntrega.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}</p>
-          </div>
-          <div id="row-total" class="row-subtotal-carrinho">
-            <p>Total</p>
-            <p>{{carrinho.total.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}</p>
-          </div>
-        </footer>
-      </main>
-    </section>
+          <!-- <ion-item lines="none">
+            <ion-label>Cartão</ion-label>
+            <ion-radio value="cartao"></ion-radio>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label>Dinheiro</ion-label>
+            <ion-radio value="dinheiro"></ion-radio>
+          </ion-item> -->
+        </ion-radio-group>
+      </section>
 
-    <section id="section-cupom">
-      <h6>Cupom</h6>
-      <div id="content-cupom">
-        <div style="width: 70%;">
-          <input id="input-cupom" placeholder="Digite aqui um cupom de desconto">
-        </div>
-        <div style="width: 25%;">
-          <button id="btn-aplicar-cupom">Aplicar</button>
-        </div>
+      <section id="section-btn-finalizar">
+        <button id="btn-finalizar" (click)="finalizaPedido()" [disabled]="!metodoPagamento">Finalizar Pedido</button>
+      </section>
+    </main>
+  </ng-container>
+  <ng-template #carrinhoVazio>
+    <div id="msg-carrinho-vazio">
+      <div>
+        <ion-icon name="cart-outline"></ion-icon>
+        <p id="txt-carrinho-vazio">
+          Seu carrinho está vazio
+        </p>
       </div>
-    </section>
-
-    <section id="section-pagamento">
-      <h6> Pagamento </h6>
-      <ion-radio-group [(ngModel)]="metodoPagamento" mode="md">
-        <ion-item lines="none">
-          <ion-label>Cartão</ion-label>
-          <ion-radio value="cartao"></ion-radio>
-        </ion-item>
-        <ion-item lines="none">
-          <ion-label>Dinheiro</ion-label>
-          <ion-radio value="dinheiro"></ion-radio>
-        </ion-item>
-      </ion-radio-group>
-    </section>
-
-    <section id="section-btn-finalizar">
-      <button id="btn-finalizar" (click)="finalizaPedido()">Finalizar Pedido</button>
-    </section>
-  </main>
+    </div>
+  </ng-template>
 </ion-content>

@@ -23,7 +23,7 @@
       <input placeholder="teste" type="text" class="searchbar">
     </header>
 
-    <section id="section-combos">
+    <section id="section-combos" *ngIf="combos">
       <p class="section-title">Combos</p>
       <ion-slides pager="false" [options]="slideOpts">
         <ion-slide *ngFor="let combo of combos">
@@ -39,7 +39,23 @@
       </ion-slides>
     </section>
 
-    <section id="section-categorias">
+    <section id="section-combos-skeleton" *ngIf="!combos">
+      <p class="section-title">Combos</p>
+      <ion-slides pager="false" [options]="slideOpts">
+        <ion-slide *ngFor="let combo of [].constructor(5)">
+          <ion-card class="slide-card-skeleton">
+            <ion-card-header class="slide-card-header-skeleton">
+              <div></div>
+            </ion-card-header>
+            <ion-card-content class="slide-card-content-skeleton">
+              <p class="slide-caption-skeleton"></p>
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+      </ion-slides>
+    </section>
+
+    <section id="section-categorias" *ngIf="categorias">
       <p class="section-title">
         Categorias
       </p>
@@ -82,6 +98,24 @@
     </section>
   </main>
 
+  <section id="section-categorias-skeleton" *ngIf="!categorias">
+    <p class="section-title">
+      Categorias
+    </p>
+    <div id="list-categorias-skeleton">
+      <div class="item-categoria-skeleton" *ngFor="let categoria of [].constructor(4)"></div>
+    </div>
 
-  <!-- <app-explore-container name="Tab 1 page"></app-explore-container> -->
+    <section id="opcoes-categoria-skeleton">
+      <div class="produto-skeleton" *ngFor="let item of [].constructor(4)">
+        <div class="produto-desc-skeleton">
+          <div class="produto-title-skeleton"></div>
+          <div class="produto-text-skeleton"></div>
+        </div>
+        <div class="produto-img-skeleton">
+        </div>
+      </div>
+    </section>
+  </section>
+
 </ion-content>

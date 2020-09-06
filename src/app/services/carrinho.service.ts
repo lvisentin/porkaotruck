@@ -15,6 +15,15 @@ export class CarrinhoService {
 
   createPedido(pedido) {
     let route = `${this.apiUrl}/pedido`;
-    this.httpClient.post(route, pedido);
+    return this.httpClient.post(route, pedido);
+  }
+
+  getMetodosPagamento() {
+    let route = `${this.apiUrl}/forma-pagamento`;
+    return this.httpClient.get(route);
+  }
+
+  teste() {
+    return console.log('teste')
   }
 }

@@ -36,7 +36,7 @@
         <header class="header-opcao" id="header-ingredientes">
           <h6>Ingredientes adicionais</h6>
           <div id="badge-ingredientes">
-            0/20
+            {{adicionais.length}}/{{ingredientes.length}}
           </div>
         </header>
 
@@ -46,10 +46,19 @@
               <div class="div-info-ingrediente">
                 <p class="ingrediente-nome">{{ingrediente.nome}}</p>
                 <p class="ingrediente-valor">
-                  + {{ingrediente.valor.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}</p>
+                  + {{ingrediente.preco[0].preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}</p>
               </div>
               <div class="div-adicionar">
-                <button class="btn-adicionar-ingrediente">Adicionar</button>
+                <!-- <button class="btn-adicionar-ingrediente" (click)="removerAdicional(ingrediente)">-</button> -->
+                <a *ngIf="ingrediente.qtd" (click)="removerAdicional(ingrediente)">
+                  -
+                </a>
+                <p>{{ingrediente.qtd }}</p>
+                <a [ngClass]="ingrediente.qtd ? 'disabled' : ''" (click)="adicionarAdicional(ingrediente)">
+                  +
+                </a>
+
+                <!-- <button class="btn-adicionar-ingrediente" (click)="adicionarAdicional(ingrediente)">+</button> -->
               </div>
             </ion-item>
           </ion-list>

@@ -10,4 +10,5 @@ export interface Produto {
     qtd?: number;
     preco: number;
     adicionais?: Array<Produto>;
+    vltotal?: number;
 }

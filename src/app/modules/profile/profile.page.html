@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>Pedidos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <main>
+    <header>
+      <aside>
+        <img src="https://placehold.it/100x100">
+      </aside>
+      <aside>
+        <p>{{user.name}}</p>
+        <p>{{user.email}}</p>
+        <p>{{user.cpf}}</p>
+      </aside>
+    </header>
+    <main>
+      <ion-item lines="none" (click)="logout()">
+        <aside>
+          <ion-icon name="exit-outline"></ion-icon>
+        </aside>
+        <aside>
+          <p>Sair</p>
+        </aside>
+      </ion-item>
+    </main>
+  </main>
+</ion-content>

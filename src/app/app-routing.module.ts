@@ -4,6 +4,15 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
+    redirectTo: 'endereco'
+  },
+  {
+    path: 'endereco',
+    loadChildren: () => import('./modules/endereco/endereco.module').then(m => m.EnderecoPageModule)
+  },
+  {
+    path: 'tabs',
     loadChildren: () => import('./modules/tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
@@ -17,10 +26,16 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./modules/login/login.module').then(m => m.LoginPageModule)
-  },  {
-    path: 'register',
-    loadChildren: () => import('./modules/register/register.module').then( m => m.RegisterPageModule)
   },
+  {
+    path: 'register',
+    loadChildren: () => import('./modules/register/register.module').then(m => m.RegisterPageModule)
+  },
+  {
+    path: 'endereco',
+    loadChildren: () => import('./modules/endereco/endereco.module').then(m => m.EnderecoPageModule)
+  },
+
 
 ];
 @NgModule({

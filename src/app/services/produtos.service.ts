@@ -17,7 +17,7 @@ export class ProdutosService {
   getProdutos(filter = null, fields = null): Observable<any> {
     const route = `${this.apiUrl}/produto/search`;
     const params = {
-      filter: {},
+      filter: filter,
       fields: fields,
       paginate: 5,
       page: 1

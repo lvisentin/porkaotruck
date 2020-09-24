@@ -13,11 +13,6 @@ export class CarrinhoService {
     private httpClient: HttpClient
   ) { }
 
-  createPedido(pedido) {
-    let route = `${this.apiUrl}/pedido`;
-    return this.httpClient.post(route, pedido);
-  }
-
   getMetodosPagamento() {
     let route = `${this.apiUrl}/forma-pagamento`;
     return this.httpClient.get(route);

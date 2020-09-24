@@ -18,10 +18,11 @@
         <div id="badges-entrega">
           <div class="badge">
             <ion-icon name="bicycle-outline"></ion-icon>
-            <p><span>30-40 </span>MIN.</p>
+            <p><span>{{entregaMin}}-{{entregaMax}} </span>MIN.</p>
           </div>
           <div class="badge">
-            <p>ENTREGA<span>R$4,99 </span></p>
+            <p>ENTREGA<span>{{carrinho.taxaEntrega.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}
+              </span></p>
           </div>
         </div>
       </aside>
@@ -38,7 +39,7 @@
               <p class="carrinho-item-nome">{{item.qtd}}x - {{item.nome}}</p>
               <div class="carrinho-item-opt" slot="end">
                 <p class="carrinho-item-valor">
-                  {{item.preco[0].preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}
+                  {{item.vltotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}
                 </p>
                 <a (click)="presentPopoverOpt($ev)">
                   <ion-icon name="ellipsis-vertical-outline"></ion-icon>

@@ -16,22 +16,27 @@ class Carrinho {
                 quantidade: item.qtd,
                 vlsubtotal: item.preco[0].preco,
                 vladicionais: 0,
-                vltotal: item.preco[0].preco,
+                vltotal: item.vltotal,
                 adicionais: []
             }
-
             if (item.adicionais) {
                 itemFormatado.adicionais = item.adicionais.map((adicional: Produto) => {
                     const adicionalFormatado = {
                         idadicional: adicional.id,
                         quantidade: adicional.qtd,
-                        vltotal: adicional.valor
+                        vltotal: adicional.preco[0].preco,
+                        vlsubtotal: adicional.preco[0].preco,
                     };
+                    return adicionalFormatado;
                 });
 
-                itemFormatado.vladicionais = item.adicionais.reduce((acc, adicional: Produto) => acc + adicional.valor, 0);
+
+                itemFormatado.vladicionais = itemFormatado.adicionais.reduce((acc, adicional: Produto) => {
+                    return acc + adicional.vltotal;
+                }, 0);
 
             } else { delete itemFormatado.adicionais }
+            console.log('itemFormatado', itemFormatado)
 
             return itemFormatado;
         })
@@ -57,11 +62,14 @@ class Carrinho {
 
 
     adicionarItem(item: Produto) {
+        item.vltotal = item.preco[0].preco;
+
         if (item.adicionais) {
-            const teste = item.adicionais.reduce((total, adicional) => {
+            const valorAdicionais = item.adicionais.reduce((total, adicional) => {
                 return total + adicional.preco[0].preco;
             }, 0);
-            console.log('teste preco', teste)
+            item.vltotal += valorAdicionais;
+            console.log('teste', valorAdicionais)
         }
         if (this.itens.length >= 1) {
             this.itens.forEach((value, index) => {
@@ -75,7 +83,7 @@ class Carrinho {
             this.itens.push(item);
         }
 
-        this.subtotal += item.preco[0].preco;
+        this.subtotal += item.vltotal;
         this.calculaTotal();
     }
 
@@ -86,6 +94,10 @@ class Carrinho {
     removerItem(item: Produto) {
         const carrinhoItem = this.itens.find(carrinhoItem => carrinhoItem == item);
         console.log('carrinhoItem', carrinhoItem);
+    }
+
+    setTaxaEntrega(taxa) {
+        this.taxaEntrega = taxa;
     }
 
 }

@@ -1,0 +1,36 @@
+header {
+    display: flex;
+    align-items: center;
+    // justify-content: space-between;
+    padding: 10px;
+
+    img {
+        border-radius: 100%;
+        max-width: 60px;
+        max-height: 60px;
+    }
+
+    p {
+        margin-left: 10px;
+        margin-top: 0px;
+        margin-bottom: 5px;
+        font-size: 16px;
+        color: #4e4e4e;
+        font-weight: 300;
+    }
+}
+
+main {
+    ion-item {
+        margin-top: 20px;
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        aside {
+            display: flex;
+            align-items: center;
+
+            & + aside {
+                margin-left: 10px;
+            }
+        }
+    }
+}

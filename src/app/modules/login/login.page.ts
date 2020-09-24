@@ -37,7 +37,7 @@ export class LoginPage implements OnInit {
 			.pipe(first())
 			.subscribe(
 				data => {
-					this.router.navigate(['/tabs/tab1']);
+					this.router.navigate(['/tabs/home']);
 					console.log('DEU BOM AQUI NO LOGIN');
 					console.log(data);
 				},

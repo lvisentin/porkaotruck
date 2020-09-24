@@ -6,6 +6,7 @@ import { carrinho } from 'src/app/classes/carrinho';
 import { AppComponent } from 'src/app/app.component';
 import { CarrinhoService } from 'src/app/services/carrinho.service';
 import { PopoverSuccessComponent } from 'src/app/shared/popover/popover-success/popover-success.component';
+import { PedidosService } from 'src/app/services/pedidos.service';
 
 @Component({
   selector: 'app-carrinho',
@@ -18,16 +19,25 @@ export class CarrinhoPage {
   public carrinho = carrinho;
   public metodoPagamento: number;
   public metodosPgto;
+  public entregaMin;
+  public entregaMax;
 
   constructor(
     private appcomponent: AppComponent,
     private popoverController: PopoverController,
     private router: Router,
-    private carrinhoService: CarrinhoService
+    private carrinhoService: CarrinhoService,
+    private pedidosService: PedidosService
   ) { }
 
 
   ionViewDidEnter() {
+    const taxa = JSON.parse(localStorage.getItem('taxaEntrega'))
+    console.log(taxa.vlpreco)
+    carrinho.setTaxaEntrega(taxa.vlpreco);
+
+    this.entregaMax = taxa.tempo_max;
+    this.entregaMin = taxa.tempo_min;
 
   }
 
@@ -83,7 +93,7 @@ export class CarrinhoPage {
 
     console.log(pedido)
 
-    this.carrinhoService.createPedido(pedido)
+    this.pedidosService.createPedido(pedido)
       .subscribe(
         (pedido) => {
           console.log('pedido', pedido)

@@ -61,6 +61,7 @@ export class ProdutoPage implements OnInit {
         "nome": "Adicional"
       }
     };
+    console.log('filter', filter)
     this.produtosService.getProdutos(filter).subscribe(
       (data) => {
         const ingredientes: Array<Produto> = data['data'].data;
@@ -81,7 +82,7 @@ export class ProdutoPage implements OnInit {
 
   adicionarAoCarrinho() {
     this.produto.qtd = this.qtd;
-    if (this.adicionais.length > 1) { this.produto.adicionais = this.adicionais; }
+    if (this.adicionais.length > 0) { this.produto.adicionais = this.adicionais; }
     this.carrinho.adicionarItem(this.produto);
     localStorage.setItem('carrinho', JSON.stringify(carrinho))
     this.router.navigate(['tabs/carrinho']);
@@ -96,7 +97,7 @@ export class ProdutoPage implements OnInit {
   }
 
   adicionarAdicional(adicional) {
-    if (!this.adicionais.find(adc => adc == adicional)) {
+    if (!this.adicionais.find(adc => adc.id == adicional.id)) {
       adicional.qtd = 1;
       this.adicionais.push(adicional);
     }

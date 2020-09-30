@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { ProdutoPageRoutingModule } from './produto-routing.module';
 
 import { ProdutoPage } from './produto.page';
+import { FilterPipe } from 'src/app/shared/pipes/fiter.pipe';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ProdutoPageRoutingModule
+    ProdutoPageRoutingModule,
   ],
+
   declarations: [ProdutoPage]
 })
 export class ProdutoPageModule { }

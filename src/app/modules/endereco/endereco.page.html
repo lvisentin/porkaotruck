@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>Digite seu endereço</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <main *ngIf="!hasEndereco">
+    <ion-searchbar [(ngModel)]="inputEndereco" (ionChange)="searchChanged()" placeholder="Digite seu endereço">
+    </ion-searchbar>
+
+    <ion-list>
+      <ion-item *ngFor="let endereco of searchResults" (click)="selectEndereco(endereco)">
+        {{endereco.description}}
+      </ion-item>
+    </ion-list>
+  </main>
+  <main *ngIf="hasEndereco">
+    <div id="div-numero-endereco">
+      <div>
+        <p>Qual o número?</p>
+        <input placeholder="Número" [(ngModel)]="numero">
+        <br>
+        <button type="submit" id="btn-save-number" (click)="submitNumero()">Salvar</button>
+      </div>
+    </div>
+  </main>
+</ion-content>

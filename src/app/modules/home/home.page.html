@@ -1,0 +1,121 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Tab 1
+    </ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content [fullscreen]="true" color="light">
+  <ion-header collapse="condense" [translucent]="true" class="ion-no-border">
+    <ion-toolbar>
+      <ion-button color="dark" fill="clear" slot="start">
+        <ion-icon name="menu-outline"></ion-icon>
+      </ion-button>
+      <ion-button color="dark" fill="clear" slot="end">
+        <ion-icon name="cart-outline"></ion-icon>
+      </ion-button>
+    </ion-toolbar>
+  </ion-header>
+
+  <main id="page-content">
+    <header class="searchbar-div">
+      <input placeholder="teste" type="text" class="searchbar">
+    </header>
+
+    <section id="section-combos" *ngIf="combos">
+      <p class="section-title">Combos</p>
+      <ion-slides pager="false" [options]="slideOpts">
+        <ion-slide *ngFor="let combo of combos">
+          <ion-card class="slide-card">
+            <ion-card-header class="slide-card-header">
+              <img [src]="combo.url_image">
+            </ion-card-header>
+            <ion-card-content class="slide-card-content">
+              <p class="slide-caption">{{combo.nome}}</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+      </ion-slides>
+    </section>
+
+    <section id="section-combos-skeleton" *ngIf="!combos">
+      <p class="section-title">Combos</p>
+      <ion-slides pager="false" [options]="slideOpts">
+        <ion-slide *ngFor="let combo of [].constructor(5)">
+          <ion-card class="slide-card-skeleton">
+            <ion-card-header class="slide-card-header-skeleton">
+              <div></div>
+            </ion-card-header>
+            <ion-card-content class="slide-card-content-skeleton">
+              <p class="slide-caption-skeleton"></p>
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+      </ion-slides>
+    </section>
+
+    <section id="section-categorias" *ngIf="categorias">
+      <p class="section-title">
+        Categorias
+      </p>
+
+      <section class="list-categoria">
+        <div class="div-categoria" *ngFor="let categoria of categorias; let i = index;"
+          [ngClass]="categoriaSelecionada == categoria.id ? 'active' : ''" (click)="selectCategoria(categoria.id)">
+          <p>{{categoria.nome}}</p>
+        </div>
+      </section>
+
+      <section class="opcoes-categoria">
+        <ion-list>
+          <ng-container *ngFor="let categoria of categorias">
+            <ion-item class="item" lines="none" *ngFor="let produto of categoria.produtos"
+              routerLink="/produto/{{produto.id}}" detail="false"
+              [hidden]="categoriaSelecionada != produto.idcategoria">
+              <aside style="width: 60%;">
+                <header>
+                  <h3 class="item-title">{{produto.nome}}</h3>
+                </header>
+                <main>
+                  <p class="item-desc">
+                    {{produto.descricao}}
+                  </p>
+                </main>
+                <footer>
+                  <h3 class="item-price">
+                    {{produto.preco[0].preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}
+                  </h3>
+                </footer>
+              </aside>
+              <aside style="width: 40%;">
+                <img [src]="produto.url_image">
+              </aside>
+            </ion-item>
+          </ng-container>
+        </ion-list>
+      </section>
+    </section>
+  </main>
+
+  <section id="section-categorias-skeleton" *ngIf="!categorias">
+    <p class="section-title">
+      Categorias
+    </p>
+    <div id="list-categorias-skeleton">
+      <div class="item-categoria-skeleton" *ngFor="let categoria of [].constructor(4)"></div>
+    </div>
+
+    <section id="opcoes-categoria-skeleton">
+      <div class="produto-skeleton" *ngFor="let item of [].constructor(4)">
+        <div class="produto-desc-skeleton">
+          <div class="produto-title-skeleton"></div>
+          <div class="produto-text-skeleton"></div>
+        </div>
+        <div class="produto-img-skeleton">
+        </div>
+      </div>
+    </section>
+  </section>
+
+</ion-content>

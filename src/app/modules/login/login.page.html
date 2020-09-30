@@ -1,15 +1,39 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button text="" style="display: block;"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Fazer Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <button class="btn btn-primary" (click)="login()">
-    Login
-  </button>
+  <main id="main-login">
+    <div>
+      <div id="div-form">
+        <form id="form-login" [formGroup]="loginForm">
+          <input formControlName="email" name="email" type="text" placeholder="E-mail">
+          <input formControlName="password" name="password" type="password" placeholder="Senha">
+        </form>
+      </div>
 
-  <button class="btn btn-primary" (click)="logout()">
-    Rota autenticada
-  </button>
+      <ng-container *ngIf="errors">
+        <p id="error-msg">{{errors.message}}</p>
+      </ng-container>
+
+      <div id="div-btn">
+        <button class="btn btn-primary" (click)="login()">
+          Login
+        </button>
+
+        <a (click)="register()">
+          Não tem uma conta? Cadastre-se
+        </a>
+
+
+      </div>
+
+    </div>
+  </main>
+
 </ion-content>

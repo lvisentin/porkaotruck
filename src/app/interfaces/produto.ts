@@ -7,4 +7,8 @@ export interface Produto {
     descricao: string;
     valor: number;
     url_image: string;
+    qtd?: number;
+    preco: number;
+    adicionais?: Array<Produto>;
+    vltotal?: number;
 }

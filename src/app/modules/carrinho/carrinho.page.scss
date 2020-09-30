@@ -167,3 +167,20 @@ ion-content {
         height: 40px;
     }
 }
+
+#msg-carrinho-vazio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    height: 100%;
+
+    ion-icon {
+        font-size: 32px;
+    }
+    #txt-carrinho-vazio {
+        color: rgba(0, 0, 0, 0.6);
+        font-size: 14px;
+    }
+}

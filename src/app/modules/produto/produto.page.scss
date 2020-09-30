@@ -1,5 +1,8 @@
 #header-lanche {
     #textos-lanche {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         padding: 20px;
 
         h2 {
@@ -11,6 +14,37 @@
             margin-top: 5px;
             font-size: 14px;
             color: #b2b2b2;
+        }
+
+        .lanche-preco {
+            color: #4e4e4e;
+            font-weight: bold;
+        }
+    }
+
+    #aside-qtd {
+        display: flex;
+
+        #qtd-div {
+            width: 25px;
+            height: 25px;
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            color: #4e4e4e;
+            margin: 0 5px;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .btn-qtd {
+            border: none;
+            color: white;
+            background: #4e4e4e;
+            border-radius: 3px;
+            width: 25px;
+            height: 25px;
         }
     }
 }
@@ -68,12 +102,25 @@
 
         .div-adicionar {
             width: 30%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            a {
+                color: #4e4e4e;
+                font-weight: bold;
+
+                &.disabled {
+                    color: #c1c1c1;
+                }
+            }
+
             .btn-adicionar-ingrediente {
                 background: #4e4e4e;
                 color: white;
                 border-radius: 5px;
                 height: 30px;
-                width: 100%;
+                width: 45%;
             }
         }
     }

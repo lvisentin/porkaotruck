@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import { LoadingController, PopoverController } from '@ionic/angular';
 import { PopoverCarrinhoComponent } from 'src/app/shared/popover/popover-carrinho/popover-carrinho.component';
 import { Router } from '@angular/router';
 import { carrinho } from 'src/app/classes/carrinho';
@@ -21,13 +21,15 @@ export class CarrinhoPage {
   public metodosPgto;
   public entregaMin;
   public entregaMax;
+  public user;
 
   constructor(
     private appcomponent: AppComponent,
     private popoverController: PopoverController,
     private router: Router,
     private carrinhoService: CarrinhoService,
-    private pedidosService: PedidosService
+    private pedidosService: PedidosService,
+    private readonly loadingController: LoadingController
   ) { }
 
 
@@ -42,6 +44,7 @@ export class CarrinhoPage {
   }
 
   ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem("user"));
     this.carrinhoService.getMetodosPagamento()
       .subscribe(
         (metodosPgto) => {
@@ -53,32 +56,50 @@ export class CarrinhoPage {
     console.log(this.carrinho)
   }
 
-  async presentPopoverOpt(ev: any, cpom,) {
+  async presentPopoverOpt(ev: any) {
     console.log('ev', ev)
     const popover = await this.popoverController.create({
       component: PopoverCarrinhoComponent,
       cssClass: 'popover-carrinho',
-      event: ev,
+      // event: ev,
+      translucent: false
+    })
+
+    const { data } = await popover.onDidDismiss();
+    console.log('data', data)
+
+    return await popover.present();
+  }
+
+  async presentPopoverSuccess(ev: any = null) {
+    // console.log('ev', ev)
+    const popover = await this.popoverController.create({
+      component: PopoverSuccessComponent,
+      cssClass: 'popover-success',
+      // event: ev,
       translucent: false
     })
 
     return await popover.present();
   }
 
-  async presentPopoverSuccess(ev: any, cpom,) {
-    console.log('ev', ev)
-    const popover = await this.popoverController.create({
-      component: PopoverSuccessComponent,
-      cssClass: 'popover-success',
-      event: ev,
-      translucent: false
-    })
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'loading-pedido',
+      message: 'Finalizando pedido...',
+    });
+    await loading.present();
 
-    return await popover.present();
+    const { role, data } = await loading.onDidDismiss();
+  }
+
+  removeItem(item) {
+    this.carrinho.removerItem(item);
   }
 
   finalizaPedido() {
     if (!localStorage.getItem('user')) { this.router.navigate(['/login']) }
+    this.presentLoading();
 
     const user = JSON.parse(localStorage.getItem('user'));
 
@@ -97,6 +118,10 @@ export class CarrinhoPage {
       .subscribe(
         (pedido) => {
           console.log('pedido', pedido)
+          this.loadingController.dismiss();
+          this.presentPopoverSuccess();
+        }, (err) => {
+          this.loadingController.dismiss();
         }
       )
 

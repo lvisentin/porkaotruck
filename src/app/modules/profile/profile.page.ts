@@ -9,19 +9,27 @@ import { Router } from '@angular/router';
 export class ProfilePage implements OnInit {
 
   public user;
-
+  public hasUser: boolean;
+  
   constructor(
     private router: Router
   ) { }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem('user'));
+    this.hasUser = true;
+  }
+
+  ionViewDidEnter() {
+    if( !localStorage.getItem('user') ) {
+      this.hasUser = false;
+    }
   }
 
   logout() {
     localStorage.removeItem('user');
-    // location.reload();
     this.router.navigate(['tabs/home']);
+    // location.reload();
   }
 
 }

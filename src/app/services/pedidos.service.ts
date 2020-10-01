@@ -20,6 +20,7 @@ export class PedidosService {
 
   getByUsuario(idUsuario: number) {
     let route = `${this.apiUrl}/user/${idUsuario}/pedidos/`;
+    console.log('asdasdasd', route)
     return this.httpClient.get(route);
   }
 

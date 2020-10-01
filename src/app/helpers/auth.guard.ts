@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate {
 		// Usuário não logado, manda pra tela de login
 		// Exemplo de como mandar query param pra assim que ele logar, voltar pra rota que ele tentou acessar:
 		// this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-		this.router.navigate(['/login']);
+		// this.router.navigate(['/login']);
 		return false;
 	}
 }

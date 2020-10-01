@@ -8,7 +8,7 @@ const routes: Routes = [
 	{
 		path: '',
 		component: ProfilePage,
-		canActivate: [AuthGuard]
+		// canActivate: [AuthGuard]
 	}
 ];
 

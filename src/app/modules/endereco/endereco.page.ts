@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone  } from '@angular/core';
 import { FormControl, FormBuilder, Validators } from '@angular/forms';
 import { EnderecoService } from 'src/app/services/endereco.service';
 import { catchError, takeUntil } from 'rxjs/operators';
@@ -32,7 +32,8 @@ export class EnderecoPage implements OnInit {
 	private formBuilder: FormBuilder,
 	private enderecoService: EnderecoService,
 	private router: Router,
-	private readonly loadingController: LoadingController
+	private readonly loadingController: LoadingController,
+	public zone: NgZone,
   ) { }
 
   ngOnInit() {
@@ -66,11 +67,13 @@ export class EnderecoPage implements OnInit {
 
   searchChanged(e) {
 	this.searchResults = [];
-    if (!e.target.value.trim().length) { return; }
-    const options = { input: e.target.value, componentRestrictions: { country: 'br' }, types: ['geocode'] };
-    this.googleAutoComplete.getPlacePredictions(options, predictions => {
-      this.searchResults = predictions;
-    });
+	if (!e.target.value.trim().length) { return; }
+	const options = { input: e.target.value, componentRestrictions: { country: 'br' }, types: ['geocode'] };
+	this.googleAutoComplete.getPlacePredictions(options, predictions => {
+		this.zone.run(() => {
+			this.searchResults = predictions;
+		});
+	});
   }
 
   sendEndereco(endString) {

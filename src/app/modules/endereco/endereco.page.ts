@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, NgZone  } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone, AfterContentInit, AfterViewInit, OnDestroy  } from '@angular/core';
 import { FormControl, FormBuilder, Validators } from '@angular/forms';
 import { EnderecoService } from 'src/app/services/endereco.service';
 import { catchError, takeUntil } from 'rxjs/operators';
@@ -14,7 +14,7 @@ declare var google: any;
   templateUrl: './endereco.page.html',
   styleUrls: ['./endereco.page.scss'],
 })
-export class EnderecoPage implements OnInit {
+export class EnderecoPage implements OnInit, AfterViewInit, OnDestroy {
 
   public enderecoForm;
   public inputEndereco;
@@ -149,7 +149,7 @@ export class EnderecoPage implements OnInit {
 
 	this.endereco.terms.reverse().map((term, index) => {
 		if (isNaN(parseInt(term.value)) && term.value !== 'Brazil' && term.value !== 'Brasil' && index !== 3) {
-		if (term.value == 'State of São Paulo') { endString += '/SP'; }
+		if (term.value === 'State of São Paulo') { endString += '/SP'; }
 		else {
 			endString += `/${term.value}`;
 		}

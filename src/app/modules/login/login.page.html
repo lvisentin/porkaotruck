@@ -1,39 +1,37 @@
 <ion-header>
-  <ion-toolbar color="dark">
-    <ion-buttons slot="start">
-      <ion-back-button text="" style="display: block;"></ion-back-button>
-    </ion-buttons>
-    <ion-title>Fazer Login</ion-title>
-  </ion-toolbar>
+	<ion-toolbar color="dark">
+		<ion-buttons slot="start">
+			<ion-back-button text="" style="display: block;"></ion-back-button>
+		</ion-buttons>
+		<ion-title>Fazer Login</ion-title>
+	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <main id="main-login">
-    <div>
-      <div id="div-form">
-        <form id="form-login" [formGroup]="loginForm">
-          <input formControlName="email" name="email" type="text" placeholder="E-mail">
-          <input formControlName="password" name="password" type="password" placeholder="Senha">
-        </form>
-      </div>
+	<main id="main-login">
+		<div>
+			<div id="div-form">
+				<form id="form-login" [formGroup]="loginForm">
+					<input formControlName="email" name="email" type="text" placeholder="E-mail">
+					<input formControlName="password" name="password" type="password" placeholder="Senha">
+				</form>
+			</div>
 
-      <ng-container *ngIf="errors">
-        <p id="error-msg">{{errors.message}}</p>
-      </ng-container>
+			<ng-container *ngIf="errors">
+				<p id="error-msg">{{errors.message}}</p>
+			</ng-container>
 
-      <div id="div-btn">
-        <button class="btn btn-primary" (click)="login()">
-          Login
-        </button>
+			<div id="div-btn">
+				<button class="btn btn-primary" (click)="login()">
+					Login
+				</button>
 
-        <a (click)="register()">
-          Não tem uma conta? Cadastre-se
-        </a>
+				<a (click)="register()">
+					Não tem uma conta? Cadastre-se
+				</a>
 
-
-      </div>
-
-    </div>
-  </main>
+			</div>
+		</div>
+	</main>
 
 </ion-content>

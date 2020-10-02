@@ -22,6 +22,7 @@ export class CarrinhoPage {
   public entregaMin;
   public entregaMax;
   public user;
+  public endereco;
 
   constructor(
     private appcomponent: AppComponent,
@@ -35,6 +36,7 @@ export class CarrinhoPage {
 
   ionViewDidEnter() {
     const taxa = JSON.parse(localStorage.getItem('taxaEntrega'))
+
     console.log(taxa.vlpreco)
     carrinho.setTaxaEntrega(taxa.vlpreco);
 
@@ -45,6 +47,7 @@ export class CarrinhoPage {
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem("user"));
+    this.endereco = JSON.parse(localStorage.getItem('endereco'));
     this.carrinhoService.getMetodosPagamento()
       .subscribe(
         (metodosPgto) => {

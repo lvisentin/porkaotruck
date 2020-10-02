@@ -31,7 +31,7 @@ export class ListaPedidosPage implements OnInit {
 
 	getPedidos() {
 		this.pedidosService.getByUsuario(this.user.id).subscribe(
-			(data) => {
+			(data: any) => {
 				this.pedidos = data.data;
 				console.log('pedidos', this.pedidos);
 				this.pedidos.map((pedido) => {

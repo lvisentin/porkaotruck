@@ -56,9 +56,9 @@ export class HomePage {
   ) { }
 
   ionViewDidEnter() {
-    if (!localStorage.getItem('taxaEntrega')) { this.router.navigate(['endereco']) };
+    if (!localStorage.getItem('taxaEntrega') || !localStorage.getItem('endereco')) { this.router.navigate(['endereco']) }
+    else { this.endereco = JSON.parse(localStorage.getItem('endereco')) }
 
-    this.endereco = JSON.parse(localStorage.getItem('endereco'));
     console.log('this.endereco', this.endereco)
     this.categoriaSelecionada = 1;
     this.getCategorias();

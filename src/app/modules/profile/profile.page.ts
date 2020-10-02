@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,17 +6,14 @@ import { Router } from '@angular/router';
 	templateUrl: './profile.page.html',
 	styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage {
 
 	public user;
 	public hasUser: boolean;
 
 	constructor(
-	private router: Router
+		private router: Router
 	) { }
-
-	ngOnInit() {
-	}
 
 	ionViewDidEnter() {
 		this.user = JSON.parse(localStorage.getItem('user'));

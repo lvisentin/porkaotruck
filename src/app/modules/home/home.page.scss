@@ -166,3 +166,30 @@
         }
     }
 }
+
+#select-enderecos {
+    padding: 0 20px;
+    .label-endereco {
+        font-size: 14px;
+        font-weight: bold;
+        font-family: "Montserrat", sans-serif;
+        margin-bottom: 5px;
+    }
+
+    .name-endereco {
+        font-weight: normal;
+        font-size: 16px;
+        font-family: "Montserrat", sans-serif;
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        span {
+            width: 90%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+}

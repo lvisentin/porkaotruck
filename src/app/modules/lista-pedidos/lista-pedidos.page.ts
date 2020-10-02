@@ -11,7 +11,8 @@ import { Router } from '@angular/router';
 export class ListaPedidosPage {
 
   public pedidos;
-  private user;
+  public error;
+  public user;
 
   constructor(
     private pedidosService: PedidosService,
@@ -38,6 +39,8 @@ export class ListaPedidosPage {
           pedido.mes = moment(pedido.created_at).locale('pt').format('MMMM');
           pedido.dia = moment(pedido.created_at).format('DD');
         })
+      }, (err) => {
+        this.pedidos = null;
       }
     );
   }

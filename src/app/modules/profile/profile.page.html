@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar color="dark">
-    <ion-title>Pedidos</ion-title>
+    <ion-title>Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <main>
+  <main *ngIf="user; else noUser">
     <header>
       <aside>
         <img src="https://placehold.it/100x100">
@@ -16,15 +16,16 @@
         <p>{{user.cpf}}</p>
       </aside>
     </header>
-    <main>
-      <ion-item lines="none" (click)="logout()">
-        <aside>
-          <ion-icon name="exit-outline"></ion-icon>
-        </aside>
-        <aside>
-          <p>Sair</p>
-        </aside>
-      </ion-item>
-    </main>
   </main>
+  <ng-template #noUser>
+    <div id="div-no-user" class="div-no-content">
+      <div>
+        <p id="txt-usuario-deslogado">
+          Você está deslogado, <br />
+          faça login para ver seu perfil!
+        </p>
+        <button id="btn-login" routerLink="/login">Fazer login</button>
+      </div>
+    </div>
+  </ng-template>
 </ion-content>

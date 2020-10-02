@@ -5,30 +5,47 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <main *ngIf="pedidos">
-    <ion-item class="item-pedido" *ngFor="let pedido of pedidos" lines="none">
-      <div class="div-pedido-data">
-        <div class="data">
-          <p class="data-dia">{{pedido.dia}}</p>
-          <p class="data-mes">{{pedido.mes.substr(0,3).toUpperCase()}}</p>
+  <main *ngIf="user; else noUser">
+    <ng-template *ngIf="pedidos; else noPedidos">
+      <ion-item class="item-pedido" *ngFor="let pedido of pedidos" lines="none">
+        <div class="div-pedido-data">
+          <div class="data">
+            <p class="data-dia">{{pedido.dia}}</p>
+            <p class="data-mes">{{pedido.mes.substr(0,3).toUpperCase()}}</p>
+          </div>
+        </div>
+        <div class="div-pedido-desc">
+          <p class="div-pedido-desc-title">Itens do pedido</p>
+          <p class="div-pedido-desc-item" *ngFor="let item of pedido.itens">
+            {{item.nome}}
+          </p>
+          <p class="div-pedido-desc-item">...</p>
+        </div>
+        <div class="div-pedido-actions">
+          <button class="btn-pedido-detalhes" routerLink="pedido/{{pedido.id}}">
+            Detalhes
+          </button>
+        </div>
+      </ion-item>
+    </ng-template>
+
+    <ng-template #noPedidos>
+      <div id="div-no-pedidos" class="div-no-content">
+        <div>
+          <p id="txt-carrinho-vazio">Você não tem pedidos.</p>
         </div>
       </div>
-      <div class="div-pedido-desc">
-        <p class="div-pedido-desc-title">
-          Itens do pedido
-        </p>
-        <p class="div-pedido-desc-item" *ngFor="let item of pedido.itens">
-          {{item.nome}}
-        </p>
-        <p class="div-pedido-desc-item">
-          ...
-        </p>
-      </div>
-      <div class="div-pedido-actions">
-        <button class="btn-pedido-detalhes" routerLink="pedido/{{pedido.id}}">Detalhes</button>
-      </div>
-    </ion-item>
+    </ng-template>
   </main>
-
-
+  <ng-template #noUser>
+    <div id="div-no-user" class="div-no-content">
+      <div>
+        <p id="txt-pedido-deslogado">
+          Você está deslogado, <br />
+          faça login para ver seus pedidos!
+        </p>
+        <button id="btn-login" routerLink="/login">Fazer login</button>
+      </div>
+    </div>
+  </ng-template>
 </ion-content>

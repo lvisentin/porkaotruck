@@ -19,7 +19,9 @@ ion-content {
             font-weight: 400;
             margin: 0;
             margin-bottom: 10px;
-
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
             #subtitle {
                 font-size: 12px;
             }
@@ -108,6 +110,7 @@ ion-content {
 }
 
 #section-cupom {
+    display: none;
     border-top: 1px solid rgba(0, 0, 0, 0.3);
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     margin-top: 10px;

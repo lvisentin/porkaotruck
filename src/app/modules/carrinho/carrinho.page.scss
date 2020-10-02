@@ -66,7 +66,12 @@ ion-content {
     #list-itens-carrinho {
         .carrinho-item {
             .carrinho-item-nome {
-                font-weight: 400;
+                font-weight: bold;
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+            .carrinho-item-adicional {
+                margin: 0px 0px 10px 30px;
                 font-size: 14px;
             }
             .carrinho-item-opt {

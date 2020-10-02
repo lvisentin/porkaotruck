@@ -36,7 +36,13 @@
         <main id="list-itens-carrinho">
           <ion-list *ngFor="let item of carrinho.itens">
             <ion-item class="ion-no-padding carrinho-item">
-              <p class="carrinho-item-nome">{{item.qtd}}x - {{item.nome}}</p>
+              <div style="display: flex;align-items: center;">
+                <div>
+                  <p class="carrinho-item-nome">{{item.qtd}}x - {{item.nome}}</p>
+                  <p class="carrinho-item-adicional" *ngFor="let adicional of item.adicionais">{{adicional.nome}}</p>
+
+                </div>
+              </div>
               <div class="carrinho-item-opt" slot="end">
                 <p class="carrinho-item-valor">
                   {{item.vltotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}

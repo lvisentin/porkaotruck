@@ -34,7 +34,7 @@ export class EnderecoPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (localStorage.getItem('taxaEntrega')) { this.router.navigate(['tabs/home']) };
+    // if (localStorage.getItem('taxaEntrega')) { this.router.navigate(['tabs/home']) };
   }
 
   ngAfterViewInit() {
@@ -87,7 +87,7 @@ export class EnderecoPage implements OnInit {
           this.enderecoService.findAndCreateUserEndereco(userEndereco)
             .pipe(takeUntil(this.instanceDestroys))
             .subscribe((resultado) => {
-
+              console.log('resultado', resultado)
               const objDestinoOrigem = {
                 origem: "Rua Carlos Smith,10",
                 destino: `${userEndereco.rua}, ${userEndereco.numero}`
@@ -105,7 +105,7 @@ export class EnderecoPage implements OnInit {
             origem: "Rua Carlos Smith,10",
             destino: `${userEndereco.rua}, ${userEndereco.numero}`
           }
-
+          console.log('resultado', result)
           this.enderecoService.getTaxaEntrega(objDestinoOrigem)
             .pipe(takeUntil(this.instanceDestroys))
             .subscribe((retorno) => {

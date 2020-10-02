@@ -42,16 +42,12 @@ export class HomePage {
   //   }
   // ];
 
-
   public combos: Produto[];
-
   public categorias: Categoria[];
   public categoriasShowable: Categoria[];
-
-
   public grupoProduto;
-
   public produtos;
+  public endereco;
 
   constructor(
     private produtosService: ProdutosService,
@@ -62,6 +58,8 @@ export class HomePage {
   ionViewDidEnter() {
     if (!localStorage.getItem('taxaEntrega')) { this.router.navigate(['endereco']) };
 
+    this.endereco = JSON.parse(localStorage.getItem('endereco'));
+    console.log('this.endereco', this.endereco)
     this.categoriaSelecionada = 1;
     this.getCategorias();
     this.getCombos();

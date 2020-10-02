@@ -36,7 +36,7 @@ export class EnderecoPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    // if (localStorage.getItem('taxaEntrega')) { this.router.navigate(['tabs/home']) };
+    if (localStorage.getItem('taxaEntrega') && !localStorage.getItem('endereco')) { this.router.navigate(['tabs/home']) };
   }
 
   ngAfterViewInit() {
@@ -90,11 +90,11 @@ export class EnderecoPage implements OnInit {
           pais: 'Brasil',
           cep: endereco['cep']
         };
+
         if (localStorage.getItem('user')) {
           this.enderecoService.findAndCreateUserEndereco(userEndereco)
             .pipe(takeUntil(this.instanceDestroys))
             .subscribe((resultado) => {
-              console.log('resultado', resultado)
               const objDestinoOrigem = {
                 origem: "Rua Carlos Smith,10",
                 destino: `${userEndereco.rua}, ${userEndereco.numero}`
@@ -104,6 +104,7 @@ export class EnderecoPage implements OnInit {
                 .pipe(takeUntil(this.instanceDestroys))
                 .subscribe((retorno) => {
                   this.loadingController.dismiss();
+                  localStorage.setItem('endereco', JSON.stringify(resultado[0]))
                   localStorage.setItem('taxaEntrega', JSON.stringify(retorno['data']));
                   this.router.navigate(['tabs/home']);
                 })
@@ -113,11 +114,11 @@ export class EnderecoPage implements OnInit {
             origem: "Rua Carlos Smith,10",
             destino: `${userEndereco.rua}, ${userEndereco.numero}`
           }
-          console.log('resultado', result)
           this.enderecoService.getTaxaEntrega(objDestinoOrigem)
             .pipe(takeUntil(this.instanceDestroys))
             .subscribe((retorno) => {
               this.loadingController.dismiss();
+              localStorage.setItem('endereco', JSON.stringify(result[0]))
               localStorage.setItem('taxaEntrega', JSON.stringify(retorno['data']));
               this.router.navigate(['tabs/home']);
             })
@@ -144,17 +145,17 @@ export class EnderecoPage implements OnInit {
     let endString: string = '';
 
     this.endereco.terms.reverse().map((term, index) => {
-      if (isNaN(parseInt(term.value)) && term.value !== 'Brazil' && term.value !== 'Brasil' && index !== 3) { 
-        if(term.value == 'State of São Paulo') { endString += '/SP'}
+      if (isNaN(parseInt(term.value)) && term.value !== 'Brazil' && term.value !== 'Brasil' && index !== 3) {
+        if (term.value == 'State of São Paulo') { endString += '/SP' }
         else {
           endString += `/${term.value}`
         }
-       }
+      }
     })
 
-    
+
     endString = endString.split(',')[0];
-    
+
     console.log("endString", endString)
     endString += '/json';
 

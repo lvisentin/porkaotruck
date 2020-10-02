@@ -16,7 +16,15 @@
         <ion-icon name="cart-outline"></ion-icon>
       </ion-button> -->
       <div id="select-enderecos">
-        <p></p>
+        <p class="label-endereco">Entregar em:</p>
+        <p class="name-endereco" *ngIf="endereco">
+          <span>
+            {{endereco.logradouro}} - {{endereco.bairro}}
+          </span>
+          <a routerLink="/endereco">
+            <ion-icon name="chevron-down-outline"></ion-icon>
+          </a>
+        </p>
       </div>
     </ion-toolbar>
   </ion-header>

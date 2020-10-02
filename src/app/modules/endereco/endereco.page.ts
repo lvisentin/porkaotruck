@@ -4,6 +4,7 @@ import { EnderecoService } from 'src/app/services/endereco.service';
 import { catchError, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 
 declare var google: any;
 
@@ -30,7 +31,8 @@ export class EnderecoPage implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private enderecoService: EnderecoService,
-    private router: Router
+    private router: Router,
+    private readonly loadingController: LoadingController
   ) { }
 
   ngOnInit() {
@@ -46,6 +48,16 @@ export class EnderecoPage implements OnInit {
     this.instanceDestroys.unsubscribe();
   }
 
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      cssClass: 'loading-endereco',
+      message: 'Buscando endereço...',
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+  }
+
   mountForm() {
     this.enderecoForm = this.formBuilder.group({
       endereco: ['', Validators.required]
@@ -53,21 +65,16 @@ export class EnderecoPage implements OnInit {
   }
 
   searchChanged() {
-
-    const options = { input: this.inputEndereco, componentRestrictions: { country: "br" }, types: ['geocode'] };
-
-    console.log(this.inputEndereco)
-    if (!this.inputEndereco.trim().length) return;
     this.searchResults = [];
+    if (!this.inputEndereco.trim().length) return;
+    const options = { input: this.inputEndereco, componentRestrictions: { country: "br" }, types: ['geocode'] };
     this.googleAutoComplete.getPlacePredictions(options, predictions => {
       this.searchResults = predictions;
-      console.log(this.searchResults)
     })
-
   }
 
-
   sendEndereco(endString) {
+    this.presentLoading();
     this.enderecoService.searchViaCep(endString)
       .pipe(takeUntil(this.instanceDestroys))
       .subscribe((result) => {
@@ -96,6 +103,7 @@ export class EnderecoPage implements OnInit {
               this.enderecoService.getTaxaEntrega(objDestinoOrigem)
                 .pipe(takeUntil(this.instanceDestroys))
                 .subscribe((retorno) => {
+                  this.loadingController.dismiss();
                   localStorage.setItem('taxaEntrega', JSON.stringify(retorno['data']));
                   this.router.navigate(['tabs/home']);
                 })
@@ -109,6 +117,7 @@ export class EnderecoPage implements OnInit {
           this.enderecoService.getTaxaEntrega(objDestinoOrigem)
             .pipe(takeUntil(this.instanceDestroys))
             .subscribe((retorno) => {
+              this.loadingController.dismiss();
               localStorage.setItem('taxaEntrega', JSON.stringify(retorno['data']));
               this.router.navigate(['tabs/home']);
             })
@@ -135,14 +144,26 @@ export class EnderecoPage implements OnInit {
     let endString: string = '';
 
     this.endereco.terms.reverse().map((term, index) => {
-      if (isNaN(parseInt(term.value)) && term.value !== 'Brasil' && index !== 3) { endString += `/${term.value}` }
+      if (isNaN(parseInt(term.value)) && term.value !== 'Brazil' && term.value !== 'Brasil' && index !== 3) { 
+        if(term.value == 'State of São Paulo') { endString += '/SP'}
+        else {
+          endString += `/${term.value}`
+        }
+       }
     })
 
+    
     endString = endString.split(',')[0];
-
+    
+    console.log("endString", endString)
     endString += '/json';
 
     this.sendEndereco(endString);
   }
 
+
+  cancelaEndereco() {
+    this.hasEndereco = false;
+    delete this.endereco;
+  }
 }

@@ -15,7 +15,7 @@ export class Interceptor implements HttpInterceptor {
 				console.error('O USUÁRIO PRECISA ESTAR LOGADO PRA ACESSAR ESSA MERDA');
 				console.log(err);
 				localStorage.removeItem('user');
-				this.router.navigate(['/login']);
+				// this.router.navigate(['/login']);
 				// Avaliar se compensa deslogar o cara aqui
 			}
 

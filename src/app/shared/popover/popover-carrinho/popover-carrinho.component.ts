@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'app-popover-carrinho',
@@ -7,8 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PopoverCarrinhoComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private readonly popoverController: PopoverController
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
+  removeItem() {
+    this.popoverController.dismiss({removeItem: true});
+  }
 }

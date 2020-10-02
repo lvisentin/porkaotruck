@@ -6,7 +6,7 @@
 
 <ion-content>
   <main *ngIf="!hasEndereco">
-    <ion-searchbar [(ngModel)]="inputEndereco" (ionChange)="searchChanged()" placeholder="Digite seu endereço">
+    <ion-searchbar [(ngModel)]="inputEndereco" (ionInput)="searchChanged($event)" placeholder="Digite seu endereço">
     </ion-searchbar>
 
     <ion-list>

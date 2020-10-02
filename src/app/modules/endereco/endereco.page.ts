@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
-import { FormControl, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild, NgZone, OnDestroy } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { EnderecoService } from 'src/app/services/endereco.service';
-import { catchError, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
@@ -14,7 +14,7 @@ declare var google: any;
   templateUrl: './endereco.page.html',
   styleUrls: ['./endereco.page.scss'],
 })
-export class EnderecoPage implements OnInit {
+export class EnderecoPage implements OnInit, OnDestroy {
 
   public enderecoForm;
   public inputEndereco;
@@ -38,10 +38,6 @@ export class EnderecoPage implements OnInit {
 
   ngOnInit() {
     // if (localStorage.getItem('taxaEntrega') && localStorage.getItem('endereco')) { this.router.navigate(['tabs/home']); }
-  }
-
-  ngAfterViewInit() {
-    console.log('google', google);
   }
 
   ngOnDestroy() {
@@ -150,13 +146,12 @@ export class EnderecoPage implements OnInit {
 
     this.endereco.terms.reverse().map((term, index) => {
       if (isNaN(parseInt(term.value)) && term.value !== 'Brazil' && term.value !== 'Brasil' && index !== 3) {
-        if (term.value == 'State of São Paulo') { endString += '/SP'; }
+        if (term.value === 'State of São Paulo') { endString += '/SP'; }
         else {
           endString += `/${term.value}`;
         }
       }
     });
-
 
     endString = endString.split(',')[0];
 

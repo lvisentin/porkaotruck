@@ -7,25 +7,25 @@ import { environment } from 'src/environments/environment';
 })
 export class PedidosService {
 
-  private apiUrl = environment.apiUrl;
+	private apiUrl = environment.apiUrl;
 
-  constructor(
-    private httpClient: HttpClient
-  ) { }
+	constructor(
+		private httpClient: HttpClient
+	) { }
 
-  createPedido(pedido) {
-    let route = `${this.apiUrl}/pedido`;
-    return this.httpClient.post(route, pedido);
-  }
+	createPedido(pedido) {
+		const route = `${this.apiUrl}/pedido`;
+		return this.httpClient.post(route, pedido);
+	}
 
-  getByUsuario(idUsuario: number) {
-    let route = `${this.apiUrl}/user/${idUsuario}/pedidos/`;
-    console.log('asdasdasd', route)
-    return this.httpClient.get(route);
-  }
+	getByUsuario(idUsuario: number) {
+		const route = `${this.apiUrl}/user/${idUsuario}/pedidos/`;
+		console.log('asdasdasd', route);
+		return this.httpClient.get(route);
+	}
 
-  getPedido(idPedido: number) {
-    let route = `${this.apiUrl}/pedido/${idPedido}`;
-    return this.httpClient.get(route);
-  }
+	getPedido(idPedido: number) {
+		const route = `${this.apiUrl}/pedido/${idPedido}`;
+		return this.httpClient.get(route);
+	}
 }

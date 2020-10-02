@@ -35,6 +35,8 @@ export class CarrinhoPage {
 
 
   ionViewDidEnter() {
+    this.user = JSON.parse(localStorage.getItem("user"));
+
     const taxa = JSON.parse(localStorage.getItem('taxaEntrega'))
 
     console.log(taxa.vlpreco)
@@ -46,7 +48,6 @@ export class CarrinhoPage {
   }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem("user"));
     this.endereco = JSON.parse(localStorage.getItem('endereco'));
     this.carrinhoService.getMetodosPagamento()
       .subscribe(

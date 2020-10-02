@@ -101,7 +101,12 @@
       </section>
 
       <section id="section-btn-finalizar">
-        <button id="btn-finalizar" (click)="finalizaPedido()" [disabled]="!metodoPagamento">Finalizar Pedido</button>
+        <ng-container *ngIf="user; else noUser">
+          <button id="btn-finalizar" (click)="finalizaPedido()" [disabled]="!metodoPagamento">Finalizar Pedido</button>
+        </ng-container>
+        <ng-template #noUser>
+          <button id="btn-login" routerLink="/login">Fazer login</button>
+        </ng-template>
       </section>
     </main>
   </ng-container>

@@ -6,7 +6,7 @@
 
 <ion-content [fullscreen]="true">
   <main *ngIf="user; else noUser">
-    <ng-template *ngIf="pedidos; else noPedidos">
+    <ng-templazte *ngIf="pedidos; else noPedidos">
       <ion-item class="item-pedido" *ngFor="let pedido of pedidos" lines="none">
         <div class="div-pedido-data">
           <div class="data">
@@ -27,7 +27,7 @@
           </button>
         </div>
       </ion-item>
-    </ng-template>
+    </ng-templazte>
 
     <ng-template #noPedidos>
       <div id="div-no-pedidos" class="div-no-content">

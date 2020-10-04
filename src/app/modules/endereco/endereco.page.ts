@@ -40,6 +40,11 @@ export class EnderecoPage implements OnInit, OnDestroy {
     // if (localStorage.getItem('taxaEntrega') && localStorage.getItem('endereco')) { this.router.navigate(['tabs/home']); }
   }
 
+  ionViewDidEnter() {
+    this.endereco = JSON.parse(localStorage.getItem('endereco'));
+    // if(localStorage.getItem())
+  }
+
   ngOnDestroy() {
     this.instanceDestroys.next(true);
     this.instanceDestroys.unsubscribe();

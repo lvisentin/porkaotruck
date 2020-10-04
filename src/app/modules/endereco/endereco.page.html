@@ -10,10 +10,14 @@
     </ion-searchbar>
 
     <ion-list>
-      <ion-item class="item-endereco" lines="none" *ngFor="let endereco of searchResults" (click)="selectEndereco(endereco)">
+      <ion-item class="item-endereco" lines="none" *ngFor="let endereco of searchResults"
+        (click)="selectEndereco(endereco)">
         {{endereco.description}}
       </ion-item>
     </ion-list>
+    <div style="padding: 20px;" *ngIf="endereco">
+      <button class="btn-back-number" routerLink="/tabs/home">Cancelar</button>
+    </div>
   </main>
   <main *ngIf="hasEndereco">
     <div id="div-numero-endereco">
@@ -22,7 +26,7 @@
         <input placeholder="Número" [(ngModel)]="numero">
         <br>
         <button type="submit" id="btn-save-number" (click)="submitNumero()">Salvar</button>
-        <button type="button" id="btn-back-number" (click)="cancelaEndereco()">Cancelar</button>
+        <button type="button" class="btn-back-number" (click)="cancelaEndereco()">Cancelar</button>
       </div>
     </div>
   </main>

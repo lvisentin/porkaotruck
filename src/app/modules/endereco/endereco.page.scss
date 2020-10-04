@@ -7,7 +7,7 @@ ion-content {
     align-items: center;
     justify-content: center;
     height: 100%;
-    div{
+    div {
         width: 100%;
         padding: 20px;
         input {
@@ -15,7 +15,7 @@ ion-content {
             border: none;
             border-radius: 5px;
             padding: 10px;
-            border: 1px solid rgba(0,0,0,.2);
+            border: 1px solid rgba(0, 0, 0, 0.2);
         }
         p {
             font-family: "Montserrat";
@@ -27,7 +27,7 @@ ion-content {
 
 .item-endereco {
     padding: 10px;
-    border-bottom: 1px solid rgba(0,0,0,.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 #btn-save-number {
@@ -40,8 +40,7 @@ ion-content {
     margin-top: 10px;
 }
 
-
-#btn-back-number {
+.btn-back-number {
     background: white;
     color: #4e4e4e;
     border: 1px solid #4e4e4e;

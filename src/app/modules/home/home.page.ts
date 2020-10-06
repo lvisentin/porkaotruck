@@ -1,18 +1,16 @@
-import { Component } from '@angular/core';
-import { Combo } from 'src/app/interfaces/combo';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Categoria } from 'src/app/interfaces/categoria';
-import { Lanche } from 'src/app/interfaces/lanche';
 import { ProdutosService } from 'src/app/services/produtos.service';
 import { Produto } from 'src/app/interfaces/produto';
 import { CategoriasService } from 'src/app/services/categorias.service';
-import { conditionallyCreateMapObjectLiteral } from '@angular/compiler/src/render3/view/util';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss']
+  styleUrls: ['home.page.scss'],
 })
+
 export class HomePage {
 
   public slideOpts = {
@@ -22,26 +20,6 @@ export class HomePage {
   }
 
   public categoriaSelecionada: number;
-
-  // public combos: Combo[] = [
-  //   {
-  //     nome: 'Porkão bacon',
-  //     src: 'assets/img/xbacon.jpg'
-  //   },
-  //   {
-  //     nome: 'Porkão bacon',
-  //     src: 'assets/img/xbacon.jpg'
-  //   },
-  //   {
-  //     nome: 'Porkão bacon',
-  //     src: 'assets/img/xbacon.jpg'
-  //   },
-  //   {
-  //     nome: 'Porkão bacon',
-  //     src: 'assets/img/xbacon.jpg'
-  //   }
-  // ];
-
   public combos: Produto[];
   public categorias: Categoria[];
   public categoriasShowable: Categoria[];
@@ -52,14 +30,20 @@ export class HomePage {
   constructor(
     private produtosService: ProdutosService,
     private categoriasService: CategoriasService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) { }
+
+  ngOnInit() {
+    console.log('on init home')
+  }
 
   ionViewDidEnter() {
     if (!localStorage.getItem('taxaEntrega') || !localStorage.getItem('endereco')) { this.router.navigate(['endereco']) }
     else { this.endereco = JSON.parse(localStorage.getItem('endereco')) }
-
-    console.log('this.endereco', this.endereco)
+    // this.cdr.detectChanges();
+    console.log('ion view did enter home')
+    
     this.categoriaSelecionada = 1;
     this.getCategorias();
     this.getCombos();

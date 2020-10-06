@@ -19,6 +19,7 @@ class Carrinho {
 				vltotal: item.vltotal,
 				adicionais: []
 			};
+
 			if (item.adicionais) {
 				itemFormatado.adicionais = item.adicionais.map((adicional: Produto) => {
 					const adicionalFormatado = {
@@ -36,8 +37,7 @@ class Carrinho {
 				}, 0);
 
 			} else { delete itemFormatado.adicionais; }
-			console.log('itemFormatado', itemFormatado);
-
+			
 			return itemFormatado;
 		});
 
@@ -61,8 +61,10 @@ class Carrinho {
 	}
 
 	adicionarItem(item: Produto) {
+		console.log('item', item)
 		item.vltotal = item.preco[0].preco * item.qtd;
-
+		
+		console.log('preco x qtd', item.preco[0].preco * item.qtd)
 		if (item.adicionais) {
 			const valorAdicionais = item.adicionais.reduce((total, adicional) => {
 				return total + adicional.preco[0].preco;
@@ -70,15 +72,17 @@ class Carrinho {
 
 			item.vltotal += valorAdicionais;
 		}
-
+		
 		if (this.itens.length >= 1) {
-			this.itens.forEach((value, index) => {
-				if (value.id === item.id) {
-					value.qtd += item.qtd;
-				} else {
-					this.itens.push(item);
-				}
-			});
+			let repeatItem = this.itens.find(value => value.id == item.id && JSON.stringify(value.adicionais) == JSON.stringify(item.adicionais));
+			
+			if (repeatItem) {
+				repeatItem.qtd += item.qtd;
+				repeatItem.vltotal = repeatItem.vltotal * repeatItem.qtd;
+			} else {
+				this.itens.push(item);
+			}
+
 		} else {
 			this.itens.push(item);
 		}

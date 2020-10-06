@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, NgZone, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { EnderecoService } from 'src/app/services/endereco.service';
 import { takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { Subject, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 
@@ -14,7 +14,7 @@ declare var google: any;
   templateUrl: './endereco.page.html',
   styleUrls: ['./endereco.page.scss'],
 })
-export class EnderecoPage implements OnInit, OnDestroy {
+export class EnderecoPage implements OnDestroy {
 
   public enderecoForm;
   public inputEndereco;
@@ -35,10 +35,6 @@ export class EnderecoPage implements OnInit, OnDestroy {
     private readonly loadingController: LoadingController,
     public zone: NgZone,
   ) { }
-
-  ngOnInit() {
-    // if (localStorage.getItem('taxaEntrega') && localStorage.getItem('endereco')) { this.router.navigate(['tabs/home']); }
-  }
 
   ionViewDidEnter() {
     this.endereco = JSON.parse(localStorage.getItem('endereco'));
@@ -78,12 +74,16 @@ export class EnderecoPage implements OnInit, OnDestroy {
   }
 
   sendEndereco(endString) {
+    console.log('endString', endString)
     this.presentLoading();
     this.enderecoService.searchViaCep(endString)
       .pipe(takeUntil(this.instanceDestroys))
       .subscribe((result) => {
+        if(!result[0].logradouro) {
+          console.log('igjeaopiughnjeaughn')
+          return throwError('Ainda não atendemos esse local!');
+        }
         const endereco = result[0];
-        console.log('endereco', endereco)
         endereco.cep = result[0].cep.replace('-', '');
 
         const userEndereco = {
@@ -108,6 +108,7 @@ export class EnderecoPage implements OnInit, OnDestroy {
               this.enderecoService.getTaxaEntrega(objDestinoOrigem)
                 .pipe(takeUntil(this.instanceDestroys))
                 .subscribe((retorno) => {
+                  console.log('get taxa entrega user', endereco)
                   this.loadingController.dismiss();
                   localStorage.setItem('endereco', JSON.stringify(endereco));
                   localStorage.setItem('taxaEntrega', JSON.stringify(retorno['data']));
@@ -122,6 +123,7 @@ export class EnderecoPage implements OnInit, OnDestroy {
           this.enderecoService.getTaxaEntrega(objDestinoOrigem)
             .pipe(takeUntil(this.instanceDestroys))
             .subscribe((retorno) => {
+              console.log('get taxa entrega no user', endereco)
               this.loadingController.dismiss();
               localStorage.setItem('endereco', JSON.stringify(endereco));
               localStorage.setItem('taxaEntrega', JSON.stringify(retorno['data']));
@@ -160,7 +162,7 @@ export class EnderecoPage implements OnInit, OnDestroy {
 
     endString = endString.split(',')[0];
 
-    console.log('endString', endString);
+    // console.log('endString', endString);
     endString += '/json';
 
     this.sendEndereco(endString);

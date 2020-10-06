@@ -15,8 +15,8 @@ import { PedidosService } from 'src/app/services/pedidos.service';
 })
 export class CarrinhoPage {
 
-  // public carrinho = this.appcomponent.carrinho
-  public carrinho = carrinho;
+  public carrinho = this.appcomponent.carrinho
+  // public carrinho = carrinho;
   public metodoPagamento: number;
   public metodosPgto;
   public entregaMin;
@@ -35,6 +35,7 @@ export class CarrinhoPage {
 
 
   ionViewDidEnter() {
+    console.log(this.carrinho)
     this.user = JSON.parse(localStorage.getItem("user"));
 
     const taxa = JSON.parse(localStorage.getItem('taxaEntrega'))
@@ -122,9 +123,11 @@ export class CarrinhoPage {
       .subscribe(
         (pedido) => {
           console.log('pedido', pedido)
+          console.log('FGUIEHAOGUHEAUOGHAEOGHUAEGUHAEUH DEU CERTO')
           this.loadingController.dismiss();
           this.presentPopoverSuccess();
         }, (err) => {
+          console.log('err', err)
           this.loadingController.dismiss();
         }
       )

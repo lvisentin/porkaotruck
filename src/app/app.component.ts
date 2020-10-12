@@ -27,10 +27,13 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 
-      const storageCarrinho = localStorage.getItem('carrinho');
+      const storageCarrinho = JSON.parse(localStorage.getItem('carrinho'));
 
       if (storageCarrinho) {
-        this.carrinho = JSON.parse(storageCarrinho);
+        this.carrinho.setItens(storageCarrinho.itens);
+        this.carrinho.setSubTotal(storageCarrinho.subtotal);
+        this.carrinho.setTaxaEntrega(storageCarrinho.taxaEntrega);
+        this.carrinho.calculaTotal();
       }
     });
   }

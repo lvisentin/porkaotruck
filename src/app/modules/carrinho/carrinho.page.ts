@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, PopoverController } from '@ionic/angular';
+import { AlertController, LoadingController, PopoverController } from '@ionic/angular';
 import { PopoverCarrinhoComponent } from 'src/app/shared/popover/popover-carrinho/popover-carrinho.component';
 import { Router } from '@angular/router';
 import { carrinho } from 'src/app/classes/carrinho';
@@ -15,7 +15,7 @@ import { PedidosService } from 'src/app/services/pedidos.service';
 })
 export class CarrinhoPage {
 
-  public carrinho = this.appcomponent.carrinho
+  public carrinho = this.appcomponent.carrinho;
   // public carrinho = carrinho;
   public metodoPagamento: number;
   public metodosPgto;
@@ -30,7 +30,8 @@ export class CarrinhoPage {
     private router: Router,
     private carrinhoService: CarrinhoService,
     private pedidosService: PedidosService,
-    private readonly loadingController: LoadingController
+    private readonly loadingController: LoadingController,
+    private readonly alertController: AlertController,
   ) { }
 
 
@@ -76,16 +77,15 @@ export class CarrinhoPage {
     return await popover.present();
   }
 
-  async presentPopoverSuccess(ev: any = null) {
+  async presentAlertSuccess(ev: any = null) {
     // console.log('ev', ev)
-    const popover = await this.popoverController.create({
-      component: PopoverSuccessComponent,
-      cssClass: 'popover-success',
-      // event: ev,
-      translucent: false
-    })
+    const alert = await this.alertController.create({
+      header: 'Pedido Concluído',
+      message: 'Seu pedido foi concluído com sucesso!',
+      buttons: ['OK']
 
-    return await popover.present();
+    });
+    await alert.present();
   }
 
   async presentLoading() {
@@ -107,6 +107,9 @@ export class CarrinhoPage {
     this.presentLoading();
 
     const user = JSON.parse(localStorage.getItem('user'));
+    
+    console.log('carrinho', this.carrinho)
+
 
     const pedido = {
       "idusuario": user.id,
@@ -123,9 +126,8 @@ export class CarrinhoPage {
       .subscribe(
         (pedido) => {
           console.log('pedido', pedido)
-          console.log('FGUIEHAOGUHEAUOGHAEOGHUAEGUHAEUH DEU CERTO')
           this.loadingController.dismiss();
-          this.presentPopoverSuccess();
+          this.presentAlertSuccess();
         }, (err) => {
           console.log('err', err)
           this.loadingController.dismiss();

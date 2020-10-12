@@ -95,6 +95,10 @@ class Carrinho {
 		this.total = this.subtotal + this.taxaEntrega;
 	}
 
+	setSubTotal(subtotal) {
+		this.subtotal = subtotal;
+	}
+
 	removerItem(item: Produto) {
 		const carrinhoItem = this.itens.find(carrinhoItem => carrinhoItem == item);
 		console.log('carrinhoItem', carrinhoItem);
@@ -102,6 +106,10 @@ class Carrinho {
 
 	setTaxaEntrega(taxa) {
 		this.taxaEntrega = taxa;
+	}
+
+	setItens(itens) {
+		this.itens = itens;
 	}
 
 }

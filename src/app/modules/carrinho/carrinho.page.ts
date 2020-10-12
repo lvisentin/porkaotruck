@@ -87,6 +87,17 @@ export class CarrinhoPage {
     });
     await alert.present();
   }
+ 
+  async presentAlertError(ev: any = null) {
+    // console.log('ev', ev)
+    const alert = await this.alertController.create({
+      header: 'Ocorreu um erro',
+      message: 'Ocorreu um erro na hora de finalizar seu pedido, tente novamente mais tarde!',
+      buttons: ['OK']
+
+    });
+    await alert.present();
+  }
 
   async presentLoading() {
     const loading = await this.loadingController.create({
@@ -131,6 +142,7 @@ export class CarrinhoPage {
         }, (err) => {
           console.log('err', err)
           this.loadingController.dismiss();
+          this.presentAlertError();
         }
       )
 

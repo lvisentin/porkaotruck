@@ -39,7 +39,7 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
-    if (!localStorage.getItem('taxaEntrega') || !localStorage.getItem('endereco')) { this.router.navigate(['endereco']) }
+    if (!localStorage.getItem('taxaEntrega') || !localStorage.getItem('endereco')) { this.router.navigate(['/endereco']) }
     else { this.endereco = JSON.parse(localStorage.getItem('endereco')) }
     // this.cdr.detectChanges();
     console.log('ion view did enter home')

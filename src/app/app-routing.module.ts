@@ -5,11 +5,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'endereco'
-  },
-  {
-    path: 'endereco',
-    loadChildren: () => import('./modules/endereco/endereco.module').then(m => m.EnderecoPageModule)
+    redirectTo: 'tabs/home'
   },
   {
     path: 'tabs',
@@ -31,11 +27,7 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./modules/register/register.module').then(m => m.RegisterPageModule)
   },
-  {
-    path: 'endereco',
-    loadChildren: () => import('./modules/endereco/endereco.module').then(m => m.EnderecoPageModule)
-  },
-
+  
 
 ];
 @NgModule({

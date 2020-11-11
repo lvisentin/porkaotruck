@@ -9,5 +9,18 @@
 
 
 <ion-content>
+  <main>
+    <div id="div-register-form">
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <p>Crie uma conta!</p>
 
+        <input placeholder="Nome" formControlName="nome">
+        <input placeholder="Email" formControlName="email">
+        <input placeholder="Senha" formControlName="senha">
+        <input placeholder="Confirmar senha" formControlName="confirmacao_senha">
+
+        <button type="submit" [disabled]="registerForm.invalid">Cadastrar</button>
+      </form>
+    </div>
+  </main>
 </ion-content>

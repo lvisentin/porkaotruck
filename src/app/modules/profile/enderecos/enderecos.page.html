@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar color="dark">
+		<ion-buttons slot="start">
+			<ion-back-button text="" style="display: block;"></ion-back-button>
+		</ion-buttons>
+		<ion-title>Meus endereços</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ng-container *ngIf="enderecos">
+		<main>
+			<!-- <p class="title">Meus endereços</p> -->
+			<ion-list>
+				<ion-item lines="none"  detail="false" *ngFor="let endereco of enderecos" class="endereco-item">
+					<p>{{endereco.endereco.rua}}, {{endereco.endereco.numero}} - {{endereco.endereco.cidade}} - {{endereco.endereco.uf}}</p>
+					<ion-icon name="trash-outline" (click)="removerEndereco(endereco)"></ion-icon>
+				</ion-item>
+			</ion-list>
+		</main>
+	</ng-container>
+</ion-content>

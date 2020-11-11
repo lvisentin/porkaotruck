@@ -2,13 +2,16 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { ProfilePage } from './profile.page';
-import { AuthGuard } from 'src/app/helpers/auth.guard';
+import { EnderecosPage } from './enderecos/enderecos.page';
 
 const routes: Routes = [
 	{
 		path: '',
 		component: ProfilePage,
-		// canActivate: [AuthGuard]
+	},
+	{
+		path: 'enderecos',
+		component: EnderecosPage
 	}
 ];
 

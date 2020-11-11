@@ -1,0 +1,73 @@
+#main-content { 
+    padding: 0 15px;
+}
+
+#estimativa-entrega {
+    font-size: 14px;
+    margin-top: 0px;
+}
+
+.title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#list-itens-pedido {
+    .pedido-item {
+        .pedido-item-nome {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .pedido-item-adicional {
+            margin: 0px 0px 10px 30px;
+            font-size: 14px;
+        }
+        .pedido-item-opt {
+            margin-right: 0px;
+            justify-content: space-between;
+            display: flex;
+            align-items: center;
+            p {
+                font-size: 14px;
+            }
+
+            .pedido-item-valor {
+                font-weight: bold;
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+#subtotal-pedido {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    .row-subtotal-pedido {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        p {
+            margin-bottom: 10px;
+            margin-top: 0px;
+            font-size: 14px;
+        }
+    }
+    #row-total {
+        margin-top: 5px;
+        p {
+            font-size: 16px;
+            font-weight: bold;
+        }
+    }
+}
+
+.section {
+    .title {
+        font-weight: bold;
+        font-size: 14px;
+    }
+    p {
+        font-size: 13px;
+    }
+}

@@ -22,9 +22,22 @@ header {
 }
 
 main {
+    ion-item:first-child {
+        border-top: 1px solid rgba(0, 0, 0, 0.3);
+    }
     ion-item {
-        margin-top: 20px;
-        border: 1px solid rgba(0, 0, 0, 0.3);
+        // margin-top: 20px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+        color: #4e4e4e;
+        
+        ion-icon {
+            font-size: 20px;
+        }
+
+        p {
+            margin-left: 10px;
+        }
+
         aside {
             display: flex;
             align-items: center;

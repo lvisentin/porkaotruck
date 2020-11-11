@@ -3,6 +3,67 @@
     <ion-buttons slot="start">
       <ion-back-button text="" style="display: block;"></ion-back-button>
     </ion-buttons>
-    <ion-title>Pedido #{{pedido ? pedido.id : 'Carregando...'}}</ion-title>
+    <ion-title>Pedido #
+      {{pedido ? pedido.id : 'Carregando...'}}
+    </ion-title>
   </ion-toolbar>
 </ion-header>
+
+<ion-content>
+  <main *ngIf="pedido" id="main-content">
+    <p class="title">Seu pedido foi feito!</p>
+    <p id="estimativa-entrega">Estimativa de entrega: {{minDeliveryDate | date: 'HH:mm'}} - {{maxDeliveryDate | date: 'HH:mm'}}</p>
+   
+    <section>
+      <main id="list-itens-pedido">
+        <ion-list *ngFor="let item of pedido.itens">
+          <ion-item class="ion-no-padding pedido-item">
+            <div style="display: flex;align-items: center;">
+              <div>
+                <p class="pedido-item-nome">{{item.quantidade}}x - {{item.produto.nome}}</p>
+                <p class="pedido-item-adicional" *ngFor="let adicional of item.adicionais">{{adicional.adicional.nome}}</p>
+
+              </div>
+            </div>
+            <div class="pedido-item-opt" slot="end">
+              <p class="pedido-item-valor">
+                {{item.vltotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}
+                <!-- {{(item.preco[0].preco * (1 - (item.preco[0].desconto_porc / 100))).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}} -->
+              </p>
+              <a (click)="removeItem(item)">
+                <ion-icon name="trash-outline"></ion-icon>
+              </a>
+            </div>
+          </ion-item>
+        </ion-list>
+        <footer id="subtotal-pedido">
+          <div id="row-subtotal" class="row-subtotal-pedido">
+            <p>Subtotal</p>
+            <p>{{pedido.vlsubtotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}</p>
+          </div>
+          <div id="row-taxa-entrega" class="row-subtotal-pedido">
+            <p>Taxa de Entrega</p>
+            <p>{{pedido.vltaxa_entrega.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}</p>
+          </div>
+          <div id="row-total" class="row-subtotal-pedido">
+            <p>Total</p>
+            <p>{{pedido.vltotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}</p>
+          </div>
+        </footer>
+      </main>
+    </section>
+    <section id="detalhes-pgto" class="section">
+      <p class="title" style="margin-bottom: 5px;">Forma de pagamento</p>
+      <p style="margin-top: 0px;">{{pedido.idforma_pagamento == 1 ? 'Dinheiro' : 'Cartão' }}</p>
+    </section>
+    <section id="detalhes-endereco" class="section">
+      <p class="title" style="margin-bottom: 5px;">
+        Endereço de entrega
+      </p>
+      <p style="margin-top: 0px;">
+        {{pedido.endereco.rua}}, {{pedido.endereco.numero}} - {{pedido.endereco.bairro}}, {{pedido.endereco.cidade}} - {{pedido.endereco.uf}}
+      </p>
+    </section>
+  </main>
+  
+</ion-content>

@@ -3,6 +3,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
 	selector: 'app-login',
@@ -17,7 +18,8 @@ export class LoginPage implements OnInit {
 	constructor(
 		private authenticationService: AuthenticationService,
 		private router: Router,
-		private formBuilder: FormBuilder
+		private formBuilder: FormBuilder,
+		private loadingController: LoadingController
 	) { }
 
 	ngOnInit() {
@@ -31,17 +33,28 @@ export class LoginPage implements OnInit {
 		});
 	}
 
+	async presentLoading() {
+		const loading = await this.loadingController.create({
+		  cssClass: 'loading-pedido',
+		  message: 'Autenticando...',
+		});
+		await loading.present();
+	}
+
 	login() {
+		this.presentLoading();
 		this.errors = null;
 		this.authenticationService.login(this.loginForm.controls.email.value, this.loginForm.controls.password.value)
 			.pipe(first())
 			.subscribe(
 				data => {
+					this.loadingController.dismiss();
 					this.router.navigate(['/tabs/home']);
 					console.log('DEU BOM AQUI NO LOGIN');
 					console.log(data);
 				},
 				error => {
+					this.loadingController.dismiss();
 					this.errors = error;
 					console.error('DEU MERDA');
 					console.log(error);

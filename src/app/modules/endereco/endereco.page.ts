@@ -4,7 +4,9 @@ import { EnderecoService } from 'src/app/services/endereco.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
+import { UserService } from 'src/app/services/user.service';
+import { PorkaoResponse } from 'src/app/interfaces/response.model';
 
 declare var google: any;
 
@@ -32,8 +34,10 @@ export class EnderecoPage implements OnDestroy {
     private formBuilder: FormBuilder,
     private enderecoService: EnderecoService,
     private router: Router,
-    private readonly loadingController: LoadingController,
     public zone: NgZone,
+    private userService: UserService,
+    private readonly loadingController: LoadingController,
+    private readonly alertController: AlertController,
   ) { }
 
   ionViewDidEnter() {
@@ -51,9 +55,19 @@ export class EnderecoPage implements OnDestroy {
       cssClass: 'loading-endereco',
       message: 'Buscando endereço...',
     });
-    await loading.present();
 
-    const { role, data } = await loading.onDidDismiss();
+    return loading.present();
+  }
+
+  async presentAlertError(msg) {
+    // console.log('ev', ev)
+    const alert = await this.alertController.create({
+      header: 'Tivemos um problema',
+      message: msg,
+      buttons: ['OK']
+
+    });
+    await alert.present();
   }
 
   mountForm() {
@@ -75,65 +89,74 @@ export class EnderecoPage implements OnDestroy {
 
   sendEndereco(endString) {
     console.log('endString', endString)
-    this.presentLoading();
-    this.enderecoService.searchViaCep(endString)
-      .pipe(takeUntil(this.instanceDestroys))
-      .subscribe((result) => {
-        if(!result[0].logradouro) {
-          console.log('igjeaopiughnjeaughn')
-          return throwError('Ainda não atendemos esse local!');
-        }
-        const endereco = result[0];
-        endereco.cep = result[0].cep.replace('-', '');
-
-        const userEndereco = {
-          rua: endereco.logradouro,
-          numero: this.numero,
-          bairro: endereco.bairro,
-          cidade: endereco.localidade,
-          uf: endereco.uf,
-          pais: 'Brasil',
-          cep: endereco.cep
-        };
-
-        if (localStorage.getItem('user')) {
-          this.enderecoService.findAndCreateUserEndereco(userEndereco)
-            .pipe(takeUntil(this.instanceDestroys))
-            .subscribe((resultado) => {
-              const objDestinoOrigem = {
-                origem: 'Rua Carlos Smith,10',
-                destino: `${userEndereco.rua}, ${userEndereco.numero}`
-              };
-
-              this.enderecoService.getTaxaEntrega(objDestinoOrigem)
-                .pipe(takeUntil(this.instanceDestroys))
-                .subscribe((retorno) => {
-                  console.log('get taxa entrega user', endereco)
-                  this.loadingController.dismiss();
-                  localStorage.setItem('endereco', JSON.stringify(endereco));
-                  localStorage.setItem('taxaEntrega', JSON.stringify(retorno['data']));
-                  this.router.navigate(['tabs/home']);
-                });
-            });
-        } else {
-          const objDestinoOrigem = {
-            origem: 'Rua Carlos Smith,10',
-            destino: `${userEndereco.rua}, ${userEndereco.numero}`
+    this.presentLoading().then(() => {
+      this.enderecoService.searchViaCep(endString)
+        .pipe(takeUntil(this.instanceDestroys))
+        .subscribe((result) => {
+          if(!result[0].logradouro) {
+            this.loadingController.dismiss();
+            this.presentAlertError('Ainda não atendemos esse local!');
+            return throwError('Ainda não atendemos esse local!');
+          }
+          const endereco = result[0];
+          endereco.cep = result[0].cep.replace('-', '');
+  
+          const userEndereco = {
+            rua: endereco.logradouro,
+            numero: this.numero,
+            bairro: endereco.bairro,
+            cidade: endereco.localidade,
+            uf: endereco.uf,
+            pais: 'Brasil',
+            cep: endereco.cep
           };
-          this.enderecoService.getTaxaEntrega(objDestinoOrigem)
-            .pipe(takeUntil(this.instanceDestroys))
-            .subscribe((retorno) => {
-              console.log('get taxa entrega no user', endereco)
-              this.loadingController.dismiss();
-              localStorage.setItem('endereco', JSON.stringify(endereco));
-              localStorage.setItem('taxaEntrega', JSON.stringify(retorno['data']));
-              this.router.navigate(['tabs/home']);
-            });
-        }
-
-      }, (err) => {
-        console.log('ERROOOO', err);
-      });
+  
+          if (localStorage.getItem('user')) {
+            this.userService.findAndCreateUserEndereco(userEndereco)
+              .pipe(takeUntil(this.instanceDestroys))
+              .subscribe((resultado: PorkaoResponse) => {
+                localStorage.setItem('userEndereco', JSON.stringify(resultado.data));
+                const objDestinoOrigem = {
+                  origem: 'Rua Carlos Smith,10',
+                  destino: `${userEndereco.rua}, ${userEndereco.numero}`
+                };
+  
+                this.enderecoService.getTaxaEntrega(objDestinoOrigem)
+                  .pipe(takeUntil(this.instanceDestroys))
+                  .subscribe((retorno) => {
+                    console.log('get taxa entrega user', endereco)
+                    console.log('get taxa entrega user 2', retorno)
+                    this.loadingController.dismiss();
+                    localStorage.setItem('endereco', JSON.stringify(endereco));
+                    localStorage.setItem('taxaEntrega', JSON.stringify(retorno['data']));
+                    this.router.navigate(['tabs/home']);
+                });
+              });
+          } else {
+            const objDestinoOrigem = {
+              origem: 'Rua Carlos Smith,10',
+              destino: `${userEndereco.rua}, ${userEndereco.numero}`
+            };
+            this.enderecoService.getTaxaEntrega(objDestinoOrigem)
+              .pipe(takeUntil(this.instanceDestroys))
+              .subscribe((retorno) => {
+                console.log('get taxa entrega no user', endereco)
+                this.loadingController.dismiss();
+                localStorage.setItem('endereco', JSON.stringify(endereco));
+                localStorage.setItem('taxaEntrega', JSON.stringify(retorno['data']));
+                this.router.navigate(['tabs/home']);
+              }, (err) => {
+                this.loadingController.dismiss();
+                this.cancelaEndereco();
+                this.presentAlertError('Ainda não atendemos esse local!');
+                return throwError('Ainda não atendemos esse local!');
+              });
+          }
+  
+        }, (err) => {
+          console.log('ERROOOO', err);
+        });
+    });
 
   }
 

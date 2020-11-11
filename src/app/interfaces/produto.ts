@@ -1,5 +1,3 @@
-import { Ingrediente } from './ingrediente';
-
 export interface Produto {
 	id: number;
 	idcategoria: number;
@@ -8,7 +6,7 @@ export interface Produto {
 	valor: number;
 	url_image: string;
 	qtd?: number;
-	preco: number;
+	preco: any;
 	adicionais?: Array<Produto>;
 	vltotal?: number;
 }

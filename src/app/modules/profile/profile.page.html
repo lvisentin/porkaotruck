@@ -16,6 +16,22 @@
         <p>{{user.cpf}}</p>
       </aside>
     </header>
+    <div>
+      <ion-list>
+        <ion-item lines="none" routerLink="/tabs/lista-pedidos">
+          <ion-icon name="newspaper-outline"></ion-icon>
+          <p>Pedidos</p>
+        </ion-item>
+        <ion-item lines="none" routerLink="enderecos">
+          <ion-icon name="locate-outline"></ion-icon>
+          <p>Endereços</p>
+        </ion-item>
+        <ion-item lines="none" (click)="logout()">
+          <ion-icon name="exit-outline"></ion-icon>
+          <p>Sair</p>
+        </ion-item>
+      </ion-list>
+    </div>
   </main>
   <ng-template #noUser>
     <div id="div-no-user" class="div-no-content">

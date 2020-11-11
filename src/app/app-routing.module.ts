@@ -27,6 +27,11 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./modules/register/register.module').then(m => m.RegisterPageModule)
   },
+  // {
+  //   path: 'enderecos',
+  //   loadChildren: () => import('./profile/enderecos/enderecos.module').then( m => m.EnderecosPageModule)
+  // },
+
   
 
 ];

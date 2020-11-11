@@ -12,7 +12,7 @@ export class ProfilePage {
 	public hasUser: boolean;
 
 	constructor(
-		private router: Router
+		private router: Router,
 	) { }
 
 	ionViewDidEnter() {

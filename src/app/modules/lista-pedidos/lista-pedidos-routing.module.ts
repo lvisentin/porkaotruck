@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: 'pedido/:id',
     component: PedidoDetalheComponent
-  }
+  },
 ];
 
 @NgModule({

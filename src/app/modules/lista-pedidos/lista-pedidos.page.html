@@ -6,7 +6,7 @@
 
 <ion-content [fullscreen]="true">
   <main *ngIf="user; else noUser">
-    <ng-templazte *ngIf="pedidos; else noPedidos">
+    <ng-container *ngIf="pedidos; else noPedidos">
       <ion-item class="item-pedido" *ngFor="let pedido of pedidos" lines="none">
         <div class="div-pedido-data">
           <div class="data">
@@ -17,17 +17,17 @@
         <div class="div-pedido-desc">
           <p class="div-pedido-desc-title">Itens do pedido</p>
           <p class="div-pedido-desc-item" *ngFor="let item of pedido.itens">
-            {{item.nome}}
+            {{item.produto.nome}}
           </p>
           <p class="div-pedido-desc-item">...</p>
         </div>
         <div class="div-pedido-actions">
-          <button class="btn-pedido-detalhes" routerLink="pedido/{{pedido.id}}">
+          <button class="btn-pedido-detalhes" (click)="goToPedido(pedido.id)">
             Detalhes
           </button>
         </div>
       </ion-item>
-    </ng-templazte>
+    </ng-container>
 
     <ng-template #noPedidos>
       <div id="div-no-pedidos" class="div-no-content">

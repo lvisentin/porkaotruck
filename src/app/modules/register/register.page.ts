@@ -16,10 +16,10 @@ export class RegisterPage implements OnInit {
   private destroy: Subject<boolean> = new Subject<boolean>();
 
   public registerForm = this.formBuilder.group({
-    nome: [{value: null, disabled: false,}],
-    email: [{value: null, disabled: false,}],
-    senha: [{value: null, disabled: false,}],
-    confirmacao_senha: [{value: null, disabled: false,}],
+    nome: [{value: null, disabled: false, }, Validators.required],
+    email: [{value: null, disabled: false, }, Validators.required],
+    senha: [{value: null, disabled: false, }, Validators.required],
+    confirmacao_senha: [{value: null, disabled: false, }, Validators.required],
   })
 
   constructor(
@@ -65,6 +65,10 @@ export class RegisterPage implements OnInit {
         this.presentAlertSuccess();
         this.router.navigate(['login']);
         console.log(registerResponse)
+      }, (err) => {
+        this.loadingController.dismiss();
+        err.message ? this.presentAlertError(err.message)
+                    : this.presentAlertError('Ocorreu um erro, tente novamente mais tarde');
       })
   }
 
@@ -72,6 +76,16 @@ export class RegisterPage implements OnInit {
     const alert = await this.alertController.create({
       header: 'Usuário registrado',
       message: 'Sua conta foi criada com sucesso, você pode logar agora.',
+      buttons: ['OK']
+
+    });
+    await alert.present();
+  }
+ 
+  async presentAlertError(msg: string) {
+    const alert = await this.alertController.create({
+      header: 'Ocorreu um erro',
+      message: msg,
       buttons: ['OK']
 
     });

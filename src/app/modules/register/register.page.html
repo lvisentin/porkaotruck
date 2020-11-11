@@ -16,8 +16,8 @@
 
         <input placeholder="Nome" formControlName="nome">
         <input placeholder="Email" formControlName="email">
-        <input placeholder="Senha" formControlName="senha">
-        <input placeholder="Confirmar senha" formControlName="confirmacao_senha">
+        <input placeholder="Senha" formControlName="senha" type="password">
+        <input placeholder="Confirmar senha" formControlName="confirmacao_senha" type="password">
 
         <button type="submit" [disabled]="registerForm.invalid">Cadastrar</button>
       </form>

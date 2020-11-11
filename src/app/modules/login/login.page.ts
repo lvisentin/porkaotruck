@@ -12,7 +12,11 @@ import { LoadingController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
 
-	public loginForm;
+	public loginForm = this.formBuilder.group({
+		email: ['', Validators.required],
+		password: ['', Validators.required]
+	});
+	
 	public errors;
 
 	constructor(
@@ -23,14 +27,6 @@ export class LoginPage implements OnInit {
 	) { }
 
 	ngOnInit() {
-		this.initForm();
-	}
-
-	initForm() {
-		this.loginForm = this.formBuilder.group({
-			email: ['', Validators.required],
-			password: ['', Validators.required]
-		});
 	}
 
 	async presentLoading() {

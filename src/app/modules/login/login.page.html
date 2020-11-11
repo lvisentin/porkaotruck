@@ -22,7 +22,7 @@
 			</ng-container>
 
 			<div id="div-btn">
-				<button class="btn btn-primary" (click)="login()">
+				<button class="btn btn-primary" (click)="login()" [disabled]="loginForm.valid">
 					Login
 				</button>
 

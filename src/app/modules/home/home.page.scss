@@ -41,11 +41,11 @@
     display: flex;
     overflow-x: auto;
     align-items: center;
-    padding: 10px 0;
+    padding: 10px 0 10px 5px;
     // padding: 0;
     .div-categoria {
         margin: 0 15px;
-        width: 100px;
+        // width: 100px;
         display: inline-block;
         p {
             margin: 0;

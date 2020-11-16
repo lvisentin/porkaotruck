@@ -1,5 +1,6 @@
 .searchbar-div {
     padding: 0 20px;
+    position: relative;
 
     .searchbar {
         border: 1px solid rgba(0, 0, 0, 0.3);
@@ -7,6 +8,17 @@
         padding: 5px 10px;
         width: 100%;
         font-weight: 300;
+    }
+
+    #lista-busca {
+        position: absolute;
+        width: 80%;
+        z-index: 999;
+
+        .img-item-busca {
+            max-width: 80px;
+            max-height: 80px;
+        }
     }
 }
 

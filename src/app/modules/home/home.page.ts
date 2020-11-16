@@ -4,6 +4,9 @@ import { ProdutosService } from 'src/app/services/produtos.service';
 import { Produto } from 'src/app/interfaces/produto';
 import { CategoriasService } from 'src/app/services/categorias.service';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { PorkaoResponse, SearchResponse } from 'src/app/interfaces/response.model';
 
 @Component({
   selector: 'app-home',
@@ -27,12 +30,20 @@ export class HomePage {
   public produtos;
   public endereco;
 
+  public searchedItens;
+
+  private destroy: Subject<boolean> = new Subject<boolean>();
+
   constructor(
     private produtosService: ProdutosService,
     private categoriasService: CategoriasService,
     private router: Router,
-    private cdr: ChangeDetectorRef
   ) { }
+
+  ngOnDestroy() {
+    this.destroy.next(true);
+    this.destroy.unsubscribe();
+  }
 
   ngOnInit() {
     console.log('on init home')
@@ -56,7 +67,9 @@ export class HomePage {
   getCategorias() {
     const fields = { "produtos": ["nome", "descricao", "url_image"] };
     const filter = { "showable": true }
-    this.categoriasService.getCategorias(filter, fields).subscribe(
+    this.categoriasService
+    .getCategorias(filter, fields)
+    .subscribe(
       (data) => {
         const categorias = data['data'].data;
         this.categorias = categorias;
@@ -74,6 +87,25 @@ export class HomePage {
         console.log(combos)
       }
     )
+  }
+
+  changeBusca(ev) {
+    console.log(ev)
+    const request = {
+      "filter": {
+        "nome": ev,
+      },		
+      paginate: 5,
+			page: 1
+    };
+
+    this.produtosService
+    .produtosSearch(request)
+    .pipe(takeUntil(this.destroy))
+    .subscribe((result: SearchResponse) => {
+      this.searchedItens = result.data['data'];
+      console.log(this.searchedItens)
+    })
   }
 
 }

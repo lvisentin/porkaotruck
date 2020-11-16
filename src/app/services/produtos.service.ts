@@ -29,4 +29,9 @@ export class ProdutosService {
 		const route = `${this.apiUrl}/produto/${productId}`;
 		return this.httpClient.get(route);
 	}
+
+	produtosSearch(request) {
+		const route = `${this.apiUrl}/produto/search`;
+		return this.httpClient.post(route, request);
+	}
 }

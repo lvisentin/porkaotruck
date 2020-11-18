@@ -112,8 +112,12 @@ export class HomePage {
     .produtosSearch(request)
     .pipe(takeUntil(this.destroy))
     .subscribe((result: SearchResponse) => {
-      this.searchedItens = result.data['data'];
-      console.log(this.searchedItens)
+      const searchedItens = result.data['data']
+      searchedItens.map((item) => {
+        this.calculaPrecoItem(item);
+      })
+      console.log(searchedItens)
+      this.searchedItens = searchedItens;
     })
   }
 

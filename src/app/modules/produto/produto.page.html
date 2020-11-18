@@ -17,7 +17,7 @@
 					<h2 class="lanche-nome">{{produto.nome}}</h2>
 					<p class="lanche-desc">{{produto.descricao}}</p>
 					<p class="lanche-preco">
-						{{(produto.preco[0].preco * qtd).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}
+						{{(produto.vltotal * qtd).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}
 					</p>
 				</aside>
 				<aside id="aside-qtd">
@@ -47,7 +47,7 @@
 								<p class="ingrediente-nome">{{ingrediente.nome}}</p>
 								<p class="ingrediente-valor">
 									+ {{(
-										ingrediente.preco[0].preco * (ingrediente.qtd || 1)
+										ingrediente.vltotal * (ingrediente.qtd || 1)
 									).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}
 								</p>
 							</div>

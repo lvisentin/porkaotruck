@@ -72,6 +72,11 @@ export class HomePage {
     .subscribe(
       (data) => {
         const categorias = data['data'].data;
+        categorias.map((categoria) => {
+          categoria.produtos.map((produto) => {
+            this.calculaPrecoItem(produto);
+          })
+        })
         this.categorias = categorias;
         console.log(this.categorias)
       }
@@ -113,16 +118,13 @@ export class HomePage {
   }
 
   calculaPrecoItem(item) {
-    console.log('item', item)
-		if (item.produto.preco[0].desconto_porc) {
-			console.log('tem preco porc', item.produto.preco[0].desconto_porc)
-      const discountMultiplier =  1 - (item.produto.preco[0].desconto_porc / 100)
-      console.log('discount', discountMultiplier)
-			item.vltotal = (item.produto.preco[0].preco * discountMultiplier) * item.quantidade;
-		} else if (item.produto.preco[0].desconto_num) {
-			item.vltotal = (item.produto.preco[0].preco - item.produto.preco[0].desconto_num) * item.quantidade;
+		if (item.preco[0].desconto_porc) {
+      const discountMultiplier =  1 - (item.preco[0].desconto_porc / 100)
+			item.vltotal = (item.preco[0].preco * discountMultiplier);
+		} else if (item.preco[0].desconto_num) {
+			item.vltotal = (item.preco[0].preco - item.preco[0].desconto_num);
 		} else {
-			item.vltotal = item.produto.preco[0].preco * item.quantidade;
+			item.vltotal = item.preco[0].preco;
 		}
     
     if (item.adicionais) {
@@ -130,7 +132,7 @@ export class HomePage {
 				item.vltotal += adicional.adicional.preco[0].preco;
 			})
 		}
-
+    console.log('item', item.vltotal)
 		return item.vltotal;
 	}
 

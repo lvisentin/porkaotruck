@@ -42,7 +42,11 @@ export class ProdutoPage implements OnInit {
 		this.produtosService.getProdutos(filter).subscribe(
 			(data) => {
 				const ingredientes: Array<Produto> = data.data.data;
+				ingredientes.map((ingrediente) => {
+					this.calculaPrecoItem(ingrediente);
+				})
 				this.ingredientes = ingredientes;
+				
 				console.log('ingredientes', ingredientes);
 			}
 		);
@@ -51,6 +55,7 @@ export class ProdutoPage implements OnInit {
 	getProduto(pId) {
 		this.produtosService.getProduto(pId).subscribe(
 			(produto) => {
+				this.calculaPrecoItem(produto.data);
 				this.produto = produto.data;
 			}
 		);
@@ -85,5 +90,24 @@ export class ProdutoPage implements OnInit {
 			delete this.adicionais.find(adc => adc.id == adicional.id).qtd;
 			this.adicionais.splice(idxAdicional, 1);
 		}
+	}
+
+	calculaPrecoItem(item) {
+		console.log('item', item)
+		if (item.preco[0].desconto_porc) {
+    		const discountMultiplier =  1 - (item.preco[0].desconto_porc / 100)
+			item.vltotal = (item.preco[0].preco * discountMultiplier);
+		} else if (item.preco[0].desconto_num) {
+			item.vltotal = (item.preco[0].preco - item.preco[0].desconto_num);
+		} else {
+			item.vltotal = item.preco[0].preco;
+		}
+    
+	    if (item.adicionais) {
+			item.adicionais.map((adicional) => {
+				item.vltotal += adicional.adicional.preco[0].preco;
+			})
+		}
+		return item.vltotal;
 	}
 }

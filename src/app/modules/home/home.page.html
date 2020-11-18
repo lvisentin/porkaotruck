@@ -44,7 +44,7 @@
                 {{item.descricao}}
               </p>
               <p class="item-price" style="margin: 5px;">
-                {{item.preco[0].preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}
+                {{item.vltotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}
               </p>
             </div>
           </ion-item>
@@ -62,7 +62,7 @@
             </ion-card-header>
             <ion-card-content class="slide-card-content">
               <p class="slide-caption">{{combo.nome}}</p>
-              <p class="slide-caption">{{combo.preco[0].preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}</p>
+              <p class="slide-caption">{{combo.vltotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}</p>
             </ion-card-content>
           </ion-card>
         </ion-slide>
@@ -114,7 +114,7 @@
                 </main>
                 <footer>
                   <h3 class="item-price">
-                    {{produto.preco[0].preco.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}
+                    {{produto.vltotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}
                   </h3>
                 </footer>
               </aside>

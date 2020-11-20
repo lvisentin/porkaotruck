@@ -13,10 +13,13 @@
 
     #lista-busca {
         position: absolute;
-        width: 85%;
+        width: 100%;
         z-index: 999;
         box-shadow: 4px 5px 5px rgba(0,0,0,.1);
         border-radius: 10px;
+        left: 0px;
+        // height: 100vh;
+        // background: white;
     
         .img-item-busca {
             max-width: 80px;

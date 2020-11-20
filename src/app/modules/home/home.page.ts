@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { Categoria } from 'src/app/interfaces/categoria';
 import { ProdutosService } from 'src/app/services/produtos.service';
 import { Produto } from 'src/app/interfaces/produto';
@@ -15,6 +15,8 @@ import { PorkaoResponse, SearchResponse } from 'src/app/interfaces/response.mode
 })
 
 export class HomePage {
+
+  @ViewChild('searchbar') searchbar;
 
   public slideOpts = {
     initialSlide: 1,
@@ -138,6 +140,11 @@ export class HomePage {
 		}
     console.log('item', item.vltotal)
 		return item.vltotal;
-	}
+  }
+  
+  limpaBusca() {
+    this.searchedItens = null;
+    this.searchbar.nativeElement.value = '';
+  }
 
 }

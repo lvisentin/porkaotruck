@@ -172,7 +172,6 @@ export class EnderecoPage implements OnDestroy {
 	submitNumero() {
 		let endString = '';
 
-
 		this.endereco.terms.reverse().map((term, index) => {
 			if (
 				isNaN(parseInt(term.value))
@@ -183,9 +182,10 @@ export class EnderecoPage implements OnDestroy {
 					endString += '/SP';
 				}
 				else if (index >= 3 && index === (this.endereco.terms.length - 1)) {
-					endString += `/${term.value.replaceAll(' ', '+').replaceAll('.', '')}`;
+					endString += `/${term.value.replace(' ', '+').replace('.', '')}`;
 				}else if (index < 3){
-					endString += `/${term.value.replaceAll(' ', '+').replaceAll('.', '')}`;
+					console.log(term.value)
+					endString += `/${term.value.replace(' ', '+').replace('.', '')}`;
 				}
 			}
 		});

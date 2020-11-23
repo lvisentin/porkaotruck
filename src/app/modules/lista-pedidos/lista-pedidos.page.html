@@ -6,7 +6,7 @@
 
 <ion-content [fullscreen]="true">
   <main *ngIf="user; else noUser">
-    <ng-container *ngIf="pedidos; else noPedidos">
+    <ng-container *ngIf="pedidos && pedidos.length > 0; else noPedidos">
       <ion-item class="item-pedido" *ngFor="let pedido of pedidos" lines="none">
         <div class="div-pedido-data">
           <div class="data">

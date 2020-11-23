@@ -8,9 +8,8 @@
 </ion-header>
 
 <ion-content>
-	<ng-container *ngIf="enderecos">
+	<ng-container *ngIf="enderecos && enderecos.length > 0; else noEnderecos">
 		<main>
-			<!-- <p class="title">Meus endereços</p> -->
 			<ion-list>
 				<ion-item lines="none"  detail="false" *ngFor="let endereco of enderecos" class="endereco-item">
 					<p>{{endereco.endereco.rua}}, {{endereco.endereco.numero}} - {{endereco.endereco.cidade}} - {{endereco.endereco.uf}}</p>
@@ -19,4 +18,15 @@
 			</ion-list>
 		</main>
 	</ng-container>
+	<ng-template #noEnderecos>
+		<div id="div-no-enderecos" class="div-no-content">
+		  <div>
+			<p id="txt-sem-enderecos">
+			  Você não tem endereços cadastrados, <br />
+			  clique para cadastrar!
+			</p>
+			<button id="btn-enderecos" routerLink="/tabs/home/endereco">Cadastrar enderecos</button>
+		  </div>
+		</div>
+	  </ng-template>
 </ion-content>

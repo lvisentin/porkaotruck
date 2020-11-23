@@ -20,12 +20,14 @@ export class UserService {
 	}
 
 	getEnderecosByUsuario() {
-        const route = `${this.apiUrl}/user/${this.user.id}/enderecos`;
-        return this.httpClient.get(route);
+		if(this.user) {
+			const route = `${this.apiUrl}/user/${this.user.id}/enderecos`;
+			return this.httpClient.get(route);
+		}
 	}
 
 	deleteUsuarioEndereco(id) {
-		const route = `${this.apiUrl}/user/${this.user.id}/enderecos`;
+		const route = `${this.apiUrl}/user/${this.user.id}/endereco/${id}`;
 		return this.httpClient.delete(route);
 	}
 

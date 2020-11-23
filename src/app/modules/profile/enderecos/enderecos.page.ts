@@ -35,7 +35,7 @@ export class EnderecosPage implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy))
       .subscribe((userEnderecosResponse: UserEnderecoResponse) => {
         this.enderecos = userEnderecosResponse.data;
-        console.log(this.enderecos);
+        console.log('enderecos', this.enderecos );
       })
   }
   

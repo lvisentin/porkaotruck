@@ -40,8 +40,9 @@ export class CarrinhoPage {
     this.user = JSON.parse(localStorage.getItem("user"));
 
     const taxa = JSON.parse(localStorage.getItem('taxaEntrega'))
-
+ 
     carrinho.setTaxaEntrega(taxa.vlpreco);
+    carrinho.calculaTotal();
 
     this.entregaMax = taxa.tempo_max;
     this.entregaMin = taxa.tempo_min;

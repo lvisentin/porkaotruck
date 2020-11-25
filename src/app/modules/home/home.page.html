@@ -124,8 +124,15 @@
                   </h3>
                 </footer>
               </aside>
-              <aside style="width: 40%;">
-                <img [src]="produto.url_image">
+              <aside style="
+                width: 35%;
+                margin-left: 20px;
+                height: 100%;
+                max-height: 100px;
+                max-width: 100px;
+                background-size: cover;
+                background-position: center;"
+              [style.background-image]="'url('+produto.url_image+')'">
               </aside>
             </ion-item>
           </ng-container>

@@ -1,3 +1,6 @@
+import { PorkaoResponse } from './../../interfaces/response.model';
+import { takeUntil } from 'rxjs/operators';
+import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { AlertController, LoadingController, PopoverController } from '@ionic/angular';
 import { PopoverCarrinhoComponent } from 'src/app/shared/popover/popover-carrinho/popover-carrinho.component';
@@ -6,6 +9,7 @@ import { Carrinho, carrinho } from 'src/app/classes/carrinho';
 import { AppComponent } from 'src/app/app.component';
 import { CarrinhoService } from 'src/app/services/carrinho.service';
 import { PedidosService } from 'src/app/services/pedidos.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-carrinho',
@@ -23,6 +27,7 @@ export class CarrinhoPage {
   public entregaMax;
   public user;
   public endereco;
+  private destroy: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private appcomponent: AppComponent,
@@ -32,6 +37,7 @@ export class CarrinhoPage {
     private pedidosService: PedidosService,
     private readonly loadingController: LoadingController,
     private readonly alertController: AlertController,
+    private readonly userService: UserService
   ) { }
 
 
@@ -47,7 +53,7 @@ export class CarrinhoPage {
     this.entregaMax = taxa.tempo_max;
     this.entregaMin = taxa.tempo_min;
 
-    this.userEndereco =  JSON.parse(localStorage.getItem('userEndereco'));
+    // this.userEndereco =  JSON.parse(localStorage.getItem('userEndereco'));
 
   }
 
@@ -141,9 +147,29 @@ export class CarrinhoPage {
     this.presentLoading();
 
     const user = JSON.parse(localStorage.getItem('user'));
-    
-    console.log('carrinho', this.carrinho)
+    const userEndereco = JSON.parse(localStorage.getItem('userEndereco'))
+    console.log('nao tem user endereco')
+    if(userEndereco) {
+      this.userEndereco = userEndereco;
+    } else {
+      const userEndereco = {
+        rua: this.endereco.logradouro,
+        numero: this.endereco.numero,
+        bairro: this.endereco.bairro,
+        cidade: this.endereco.localidade,
+        uf: this.endereco.uf,
+        pais: 'Brasil',
+        cep: this.endereco.cep
+      };
 
+      this.userService.findAndCreateUserEndereco(userEndereco)
+        .pipe(takeUntil(this.destroy))
+        .subscribe((result: PorkaoResponse) => {
+          console.log('result')
+          localStorage.setItem('userEndereco', JSON.stringify(result.data));
+        })
+    }
+    
     const pedido = {
       "idendereco": this.userEndereco.id,
       "idusuario": user.id,

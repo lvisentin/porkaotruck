@@ -11,7 +11,16 @@
 <ion-content>
 	<ng-container *ngIf="produto; else loading">
 		<header id="header-lanche">
-			<img [src]="produto.url_image">
+			<div style="
+				background-image: url(https://storage.googleapis.com/pokao-lanche/porkao/porkao-3-queijos.png);
+				width: 100%;
+				height: 200px;
+				background-size: cover;
+				background-position: center;"
+			[style.background-image]="'url('+produto.url_image+')'">
+
+				<!-- <img style="width: 100%;" [src]="produto.url_image"> -->
+			</div>
 			<main id="textos-lanche">
 				<aside>
 					<h2 class="lanche-nome">{{produto.nome}}</h2>

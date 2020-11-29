@@ -12,9 +12,9 @@ import { PedidosService } from 'src/app/services/pedidos.service';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-carrinho',
-  templateUrl: './carrinho.page.html',
-  styleUrls: ['./carrinho.page.scss'],
+	selector: 'app-carrinho',
+	templateUrl: './carrinho.page.html',
+	styleUrls: ['./carrinho.page.scss'],
 })
 export class CarrinhoPage {
 
@@ -42,104 +42,104 @@ export class CarrinhoPage {
 
 
   ionViewDidEnter() {
-    console.log(this.carrinho)
-    this.user = JSON.parse(localStorage.getItem("user"));
+	console.log(this.carrinho);
+	this.user = JSON.parse(localStorage.getItem('user'));
 
-    const taxa = JSON.parse(localStorage.getItem('taxaEntrega'))
- 
-    carrinho.setTaxaEntrega(taxa.vlpreco);
-    carrinho.calculaTotal();
+	const taxa = JSON.parse(localStorage.getItem('taxaEntrega'));
 
-    this.entregaMax = taxa.tempo_max;
-    this.entregaMin = taxa.tempo_min;
+	carrinho.setTaxaEntrega(taxa.vlpreco);
+	carrinho.calculaTotal();
 
-    // this.userEndereco =  JSON.parse(localStorage.getItem('userEndereco'));
+	this.entregaMax = taxa.tempo_max;
+	this.entregaMin = taxa.tempo_min;
+
+	this.userEndereco =  JSON.parse(localStorage.getItem('userEndereco'));
 
   }
 
   ngOnInit() {
-    this.endereco = JSON.parse(localStorage.getItem('endereco'));
-    this.carrinhoService.getMetodosPagamento()
-      .subscribe(
-        (metodosPgto) => {
-          this.metodosPgto = metodosPgto['data'];
-          console.log(this.metodosPgto)
-        }
-      )
+	this.endereco = JSON.parse(localStorage.getItem('endereco'));
+	this.carrinhoService.getMetodosPagamento()
+		.subscribe(
+		(metodosPgto) => {
+			this.metodosPgto = metodosPgto['data'];
+			console.log(this.metodosPgto);
+		}
+		);
 
-    console.log(this.carrinho)
+	console.log(this.carrinho);
   }
 
   async presentPopoverOpt(idProd: any) {
-    console.log('ev', idProd)
-    const popover = await this.popoverController.create({
-      component: PopoverCarrinhoComponent,
-      cssClass: 'popover-carrinho',
-      // event: ev,
-      translucent: false,
-    })
+	console.log('ev', idProd);
+	const popover = await this.popoverController.create({
+		component: PopoverCarrinhoComponent,
+		cssClass: 'popover-carrinho',
+		// event: ev,
+		translucent: false,
+	});
 
-    const { data } = await popover.onDidDismiss();
-    console.log('data', data)
+	const { data } = await popover.onDidDismiss();
+	console.log('data', data);
 
-    return await popover.present();
+	return await popover.present();
   }
 
   async presentAlertSuccess(ev: any = null) {
-    const alert = await this.alertController.create({
-      header: 'Pedido Concluído',
-      message: 'Seu pedido foi concluído com sucesso!',
-      buttons: ['OK']
+	const alert = await this.alertController.create({
+		header: 'Pedido Concluído',
+		message: 'Seu pedido foi concluído com sucesso!',
+		buttons: ['OK']
 
-    });
-    await alert.present();
+	});
+	await alert.present();
   }
- 
-  async presentAlertError(ev: any = null) {
-    const alert = await this.alertController.create({
-      header: 'Ocorreu um erro',
-      message: 'Ocorreu um erro na hora de finalizar seu pedido, tente novamente mais tarde!',
-      buttons: ['OK']
 
-    });
-    await alert.present();
+  async presentAlertError(ev: any = null) {
+	const alert = await this.alertController.create({
+		header: 'Ocorreu um erro',
+		message: 'Ocorreu um erro na hora de finalizar seu pedido, tente novamente mais tarde!',
+		buttons: ['OK']
+
+	});
+	await alert.present();
   }
 
   async presentAlertConfirm(item) {
-    console.log('item', item)
-    const alert = await this.alertController.create({
-      header: 'Remover item',
-      message: `Deseja remover o item ${item.nome} do carrinho?`,
-      buttons: [{
-        text: 'Cancelar',
-        handler: () => {
-          this.alertController.dismiss()
-        }
-      },
-      {
-        text: 'Sim',
-        handler: () => {
-          this.removeItem(item);
-        }
-      }]
+	console.log('item', item);
+	const alert = await this.alertController.create({
+		header: 'Remover item',
+		message: `Deseja remover o item ${item.nome} do carrinho?`,
+		buttons: [{
+		text: 'Cancelar',
+		handler: () => {
+			this.alertController.dismiss();
+		}
+		},
+		{
+		text: 'Sim',
+		handler: () => {
+			this.removeItem(item);
+		}
+		}]
 
-    });
-    await alert.present();
+	});
+	await alert.present();
   }
 
   async presentLoading() {
-    const loading = await this.loadingController.create({
-      cssClass: 'loading-pedido',
-      message: 'Finalizando pedido...',
-    });
-    await loading.present();
+	const loading = await this.loadingController.create({
+		cssClass: 'loading-pedido',
+		message: 'Finalizando pedido...',
+	});
+	await loading.present();
 
-    const { role, data } = await loading.onDidDismiss();
+	const { role, data } = await loading.onDidDismiss();
   }
 
   removeItem(item) {
-    this.carrinho.removerItem(item);
-    localStorage.setItem('carrinho', JSON.stringify(carrinho));
+	this.carrinho.removerItem(item);
+	localStorage.setItem('carrinho', JSON.stringify(carrinho));
   }
 
   finalizaPedido() {
@@ -203,6 +203,6 @@ export class CarrinhoPage {
   }
 
   removerItem(item) {
-    this.carrinho.removerItem(item);
+	this.carrinho.removerItem(item);
   }
 }

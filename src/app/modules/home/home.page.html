@@ -40,7 +40,7 @@
       </div>
       <div id="lista-busca" *ngIf="searchedItens">
         <ion-list>
-          <ion-item *ngFor="let item of searchedItens" lines="none" style="padding: 10px 0;">
+          <ion-item *ngFor="let item of searchedItens" lines="none" style="padding: 10px 0;" routerLink="/produto/{{item.id}}">
             <div>
               <img class="img-item-busca" [src]="item.url_image">
             </div>

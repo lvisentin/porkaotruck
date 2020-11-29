@@ -38,17 +38,38 @@
 
 .slide-card {
     width: 200px;
-    // height: 150px;
+    // max-height: 80px;
+    // height: 80px;
+    display: flex;
+    align-items: center;
+
     .slide-card-header {
         padding: 0;
+        height: 100px;
+        background-size: cover;
+        background-position: center;
     }
 
     .slide-caption {
         margin-bottom: 0px;
     }
 
+    .slide-name {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
     .slide-card-content {
         padding: 5px 20px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+
+        div{
+            width: 100%;
+            text-align: center;
+        }
         // display: flex;
         // align-items: center;
         // justify-content: center;

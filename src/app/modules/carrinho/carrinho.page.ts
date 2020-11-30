@@ -95,10 +95,10 @@ export class CarrinhoPage {
 	await alert.present();
   }
 
-  async presentAlertError(ev: any = null) {
+  async presentAlertError(ev: any = null, msg) {
 	const alert = await this.alertController.create({
 		header: 'Ocorreu um erro',
-		message: 'Ocorreu um erro na hora de finalizar seu pedido, tente novamente mais tarde!',
+		message: msg,
 		buttons: ['OK']
 
 	});
@@ -169,9 +169,11 @@ export class CarrinhoPage {
           localStorage.setItem('userEndereco', JSON.stringify(result.data));
         })
     }
-    
+  
+    console.log('userendereco', this.userEndereco)
+
     const pedido = {
-      "idendereco": this.userEndereco.id,
+      "idendereco": this.userEndereco.idendereco,
       "idusuario": user.id,
       "itens": this.carrinho.returnItensApi(),
       "vltotal": this.carrinho.getVlTotal(),
@@ -197,7 +199,7 @@ export class CarrinhoPage {
         }, (err) => {
           console.log('err', err)
           this.loadingController.dismiss();
-          this.presentAlertError();
+          this.presentAlertError(null, err.message);
         }
       )
   }

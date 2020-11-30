@@ -56,7 +56,8 @@ export class CarrinhoPage {
 	this.carrinhoService.getMetodosPagamento()
 		.subscribe(
 		(metodosPgto) => {
-			this.metodosPgto = metodosPgto.data;
+			// tslint:disable-next-line: no-string-literal
+			this.metodosPgto = metodosPgto['data'];
 			console.log(this.metodosPgto);
 		}
 		);

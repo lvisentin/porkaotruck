@@ -88,7 +88,6 @@ export class EnderecoPage implements OnDestroy {
 	}
 
 	sendEndereco(endString) {
-
 		this.presentLoading().then(() => {
 			this.enderecoService.searchViaCep(endString)
 			.pipe(takeUntil(this.instanceDestroys))
@@ -100,7 +99,8 @@ export class EnderecoPage implements OnDestroy {
 				}
 				const endereco = result[0];
 				endereco.cep = result[0].cep.replace('-', '');
-
+				endereco.numero = this.numero;
+				
 				const userEndereco = {
 					rua: endereco.logradouro,
 					numero: this.numero,

@@ -40,7 +40,7 @@
       </div>
       <div id="lista-busca" *ngIf="searchedItens">
         <ion-list>
-          <ion-item *ngFor="let item of searchedItens" lines="none" style="padding: 10px 0;">
+          <ion-item *ngFor="let item of searchedItens" lines="none" style="padding: 10px 0;" routerLink="/produto/{{item.id}}">
             <div>
               <img class="img-item-busca" [src]="item.url_image">
             </div>
@@ -63,12 +63,14 @@
       <ion-slides pager="false" [options]="slideOpts">
         <ion-slide *ngFor="let combo of combos">
           <ion-card class="slide-card" routerLink="/produto/{{combo.id}}">
-            <ion-card-header class="slide-card-header">
-              <img [src]="combo.url_image">
+            <ion-card-header class="slide-card-header" [style.background-image]="'url('+combo.url_image+')'">
+              <!-- <img [src]="combo.url_image"> -->
             </ion-card-header>
             <ion-card-content class="slide-card-content">
-              <p class="slide-caption">{{combo.nome}}</p>
-              <p class="slide-caption">{{combo.vltotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}</p>
+              <div>
+                <p class="slide-caption slide-name">{{combo.nome}}</p>
+                <p class="slide-caption">{{combo.vltotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}</p>
+              </div>
             </ion-card-content>
           </ion-card>
         </ion-slide>

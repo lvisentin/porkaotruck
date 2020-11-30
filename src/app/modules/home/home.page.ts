@@ -74,6 +74,7 @@ export class HomePage {
     .subscribe(
       (data) => {
         const categorias = data['data'].data;
+        console.log('categorias', categorias)
         categorias.map((categoria) => {
           categoria.produtos.map((produto) => {
             this.calculaPrecoItem(produto);
@@ -90,6 +91,7 @@ export class HomePage {
     this.produtosService.getProdutos(filter).subscribe(
       (data) => {
         const combos: Array<Produto> = data['data'].data;
+        console.log('combos', combos)
         combos.map((produto) => {
           this.calculaPrecoItem(produto);
           console.log('produto', produto)

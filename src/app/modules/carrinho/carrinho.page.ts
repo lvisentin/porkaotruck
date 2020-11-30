@@ -1,3 +1,6 @@
+import { PorkaoResponse } from './../../interfaces/response.model';
+import { takeUntil } from 'rxjs/operators';
+import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
 import { AlertController, LoadingController, PopoverController } from '@ionic/angular';
 import { PopoverCarrinhoComponent } from 'src/app/shared/popover/popover-carrinho/popover-carrinho.component';
@@ -6,6 +9,7 @@ import { Carrinho, carrinho } from 'src/app/classes/carrinho';
 import { AppComponent } from 'src/app/app.component';
 import { CarrinhoService } from 'src/app/services/carrinho.service';
 import { PedidosService } from 'src/app/services/pedidos.service';
+import { Subject } from 'rxjs';
 
 @Component({
 	selector: 'app-carrinho',
@@ -23,15 +27,17 @@ export class CarrinhoPage {
   public entregaMax;
   public user;
   public endereco;
+  private destroy: Subject<boolean> = new Subject<boolean>();
 
   constructor(
-	private appcomponent: AppComponent,
-	private popoverController: PopoverController,
-	private router: Router,
-	private carrinhoService: CarrinhoService,
-	private pedidosService: PedidosService,
-	private readonly loadingController: LoadingController,
-	private readonly alertController: AlertController,
+    private appcomponent: AppComponent,
+    private popoverController: PopoverController,
+    private router: Router,
+    private carrinhoService: CarrinhoService,
+    private pedidosService: PedidosService,
+    private readonly loadingController: LoadingController,
+    private readonly alertController: AlertController,
+    private readonly userService: UserService
   ) { }
 
 
@@ -90,10 +96,10 @@ export class CarrinhoPage {
 	await alert.present();
   }
 
-  async presentAlertError(ev: any = null) {
+  async presentAlertError(ev: any = null, msg) {
 	const alert = await this.alertController.create({
 		header: 'Ocorreu um erro',
-		message: 'Ocorreu um erro na hora de finalizar seu pedido, tente novamente mais tarde!',
+		message: msg,
 		buttons: ['OK']
 
 	});
@@ -138,43 +144,65 @@ export class CarrinhoPage {
   }
 
   finalizaPedido() {
-	if (!localStorage.getItem('user')) { this.router.navigate(['/login']); }
-	this.presentLoading();
+    if (!localStorage.getItem('user')) { this.router.navigate(['/login']) }
+    this.presentLoading();
 
-	const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user'));
+    const userEndereco = JSON.parse(localStorage.getItem('userEndereco'))
+    console.log('nao tem user endereco')
+    if(userEndereco) {
+      this.userEndereco = userEndereco;
+    } else {
+      const userEndereco = {
+        rua: this.endereco.logradouro,
+        numero: this.endereco.numero,
+        bairro: this.endereco.bairro,
+        cidade: this.endereco.localidade,
+        uf: this.endereco.uf,
+        pais: 'Brasil',
+        cep: this.endereco.cep
+      };
 
-	console.log('carrinho', this.carrinho);
+      this.userService.findAndCreateUserEndereco(userEndereco)
+        .pipe(takeUntil(this.destroy))
+        .subscribe((result: PorkaoResponse) => {
+          console.log('result')
+          localStorage.setItem('userEndereco', JSON.stringify(result.data));
+        })
+    }
+  
+    console.log('userendereco', this.userEndereco)
 
-	const pedido = {
-		idendereco: this.userEndereco.id,
-		idusuario: user.id,
-		itens: this.carrinho.returnItensApi(),
-		vltotal: this.carrinho.getVlTotal(),
-		vlsubtotal: this.carrinho.getVlSubtotal(),
-		vltaxa_entrega: this.carrinho.getVlTaxaEntrega(),
-		idforma_pagamento: this.metodoPagamento
-	};
+    const pedido = {
+      "idendereco": this.userEndereco.idendereco,
+      "idusuario": user.id,
+      "itens": this.carrinho.returnItensApi(),
+      "vltotal": this.carrinho.getVlTotal(),
+      "vlsubtotal": this.carrinho.getVlSubtotal(),
+      "vltaxa_entrega": this.carrinho.getVlTaxaEntrega(),
+      "idforma_pagamento": this.metodoPagamento
+    }
 
-	console.log(pedido);
+    console.log(pedido)
 
-	this.pedidosService.createPedido(pedido)
-		.subscribe(
-		(pedido) => {
-			console.log('pedido', pedido);
-			this.loadingController.dismiss();
-			this.presentAlertSuccess();
+    this.pedidosService.createPedido(pedido)
+      .subscribe(
+        (pedido) => {
+          console.log('pedido', pedido)
+          this.loadingController.dismiss();
+          this.presentAlertSuccess();
 
-			this.carrinho.limpaCarrinho();
-			localStorage.removeItem('carrinho');
+          this.carrinho.limpaCarrinho();
+          localStorage.removeItem('carrinho');
 
-			this.router.navigate(['tabs/home']);
-
-		}, (err) => {
-			console.log('err', err);
-			this.loadingController.dismiss();
-			this.presentAlertError();
-		}
-		);
+          this.router.navigate(['tabs/home']);
+        
+        }, (err) => {
+          console.log('err', err)
+          this.loadingController.dismiss();
+          this.presentAlertError(null, err.message);
+        }
+      )
   }
 
   removerItem(item) {

@@ -32,7 +32,7 @@ export class AuthenticationService {
 	login(email: string, password: string) {
 		return this.http.post<any>(`${environment.apiUrl}/login`, { email, password })
 			.pipe(map(user => {
-
+				console.log(user)
 				localStorage.setItem('user', JSON.stringify(user.data.user));
 				localStorage.setItem('token', JSON.stringify(user.data.access_token));
 

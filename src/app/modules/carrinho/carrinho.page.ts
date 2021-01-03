@@ -62,27 +62,20 @@ export class CarrinhoPage {
     this.carrinhoService.getMetodosPagamento()
       .subscribe(
         (metodosPgto) => {
-          // tslint:disable-next-line: no-string-literal
           this.metodosPgto = metodosPgto['data'];
           console.log(this.metodosPgto);
         }
       );
-
-    console.log(this.carrinho);
   }
 
   async presentPopoverOpt(idProd: any) {
-    console.log('ev', idProd);
     const popover = await this.popoverController.create({
       component: PopoverCarrinhoComponent,
       cssClass: 'popover-carrinho',
-      // event: ev,
       translucent: false,
     });
 
     const { data } = await popover.onDidDismiss();
-    console.log('data', data);
-
     return await popover.present();
   }
 
@@ -148,10 +141,6 @@ export class CarrinhoPage {
     this.presentLoading();
 
     const user = JSON.parse(localStorage.getItem('user'));
-    // const userEndereco = JSON.parse(localStorage.getItem('userEndereco'))
-
-
-    console.log('nao tem user endereco', this.endereco)
 
     const userEndereco = {
       rua: this.endereco.logradouro,
@@ -162,15 +151,15 @@ export class CarrinhoPage {
       pais: 'Brasil',
       cep: this.endereco.cep
     };
+
     this.userService.findAndCreateUserEndereco(userEndereco, user)
       .pipe(takeUntil(this.destroy))
       .subscribe((result: PorkaoResponse) => {
         console.log('result')
         // localStorage.setItem('userEndereco', JSON.stringify(result.data));
-        const userendereco2 = result.data
-
+    
         const pedido = {
-          "idendereco": userendereco2['idendereco'],
+          "idendereco": result.data['idendereco'],
           "idusuario": user.id,
           "itens": this.carrinho.returnItensApi(),
           "vltotal": this.carrinho.getVlTotal(),
@@ -178,8 +167,6 @@ export class CarrinhoPage {
           "vltaxa_entrega": this.carrinho.getVlTaxaEntrega(),
           "idforma_pagamento": this.metodoPagamento
         }
-    
-        console.log(pedido)
     
         this.pedidosService.createPedido(pedido)
           .subscribe(
@@ -222,11 +209,6 @@ export class CarrinhoPage {
     //       localStorage.setItem('userEndereco', JSON.stringify(result.data));
     //     })
     // }
-
-
-    console.log('userendereco', this.userEndereco)
-
-    
   }
 
   removerItem(item) {

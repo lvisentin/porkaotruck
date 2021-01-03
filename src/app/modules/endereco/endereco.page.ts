@@ -110,9 +110,9 @@ export class EnderecoPage implements OnDestroy {
 					pais: 'Brasil',
 					cep: endereco.cep
 				};
-
-				if (localStorage.getItem('user')) {
-					this.userService.findAndCreateUserEndereco(userEndereco)
+				const user = JSON.parse(localStorage.getItem('user'))
+				if (user) {
+					this.userService.findAndCreateUserEndereco(userEndereco, user)
 						.pipe(takeUntil(this.instanceDestroys))
 						.subscribe((resultado: PorkaoResponse) => {
 						localStorage.setItem('userEndereco', JSON.stringify(resultado.data));
@@ -143,7 +143,6 @@ export class EnderecoPage implements OnDestroy {
 					this.enderecoService.getTaxaEntrega(objDestinoOrigem)
 						.pipe(takeUntil(this.instanceDestroys))
 						.subscribe((retorno) => {
-
 							this.loadingController.dismiss();
 							localStorage.setItem('endereco', JSON.stringify(endereco));
 							localStorage.setItem('taxaEntrega', JSON.stringify(retorno.data));
@@ -157,7 +156,8 @@ export class EnderecoPage implements OnDestroy {
 				}
 
 			}, (err) => {
-
+				this.loadingController.dismiss();
+				this.presentAlertError('Ocorreu um erro, tente novamente')
 			});
 		});
 

@@ -12,9 +12,9 @@ import { PedidosService } from 'src/app/services/pedidos.service';
 import { Subject } from 'rxjs';
 
 @Component({
-	selector: 'app-carrinho',
-	templateUrl: './carrinho.page.html',
-	styleUrls: ['./carrinho.page.scss'],
+  selector: 'app-carrinho',
+  templateUrl: './carrinho.page.html',
+  styleUrls: ['./carrinho.page.scss'],
 })
 export class CarrinhoPage {
 
@@ -42,105 +42,105 @@ export class CarrinhoPage {
 
 
   ionViewDidEnter() {
-	console.log(this.carrinho);
-	this.user = JSON.parse(localStorage.getItem('user'));
+    console.log(this.carrinho);
+    this.user = JSON.parse(localStorage.getItem('user'));
 
-	const taxa = JSON.parse(localStorage.getItem('taxaEntrega'));
+    const taxa = JSON.parse(localStorage.getItem('taxaEntrega'));
 
-	carrinho.setTaxaEntrega(taxa.vlpreco);
-	carrinho.calculaTotal();
+    carrinho.setTaxaEntrega(taxa.vlpreco);
+    carrinho.calculaTotal();
 
-	this.entregaMax = taxa.tempo_max;
-	this.entregaMin = taxa.tempo_min;
+    this.entregaMax = taxa.tempo_max;
+    this.entregaMin = taxa.tempo_min;
 
-	this.userEndereco =  JSON.parse(localStorage.getItem('userEndereco'));
+    this.userEndereco = JSON.parse(localStorage.getItem('userEndereco'));
+    this.endereco = JSON.parse(localStorage.getItem('endereco'));
 
   }
 
   ngOnInit() {
-	this.endereco = JSON.parse(localStorage.getItem('endereco'));
-	this.carrinhoService.getMetodosPagamento()
-		.subscribe(
-		(metodosPgto) => {
-			// tslint:disable-next-line: no-string-literal
-			this.metodosPgto = metodosPgto['data'];
-			console.log(this.metodosPgto);
-		}
-		);
+    this.carrinhoService.getMetodosPagamento()
+      .subscribe(
+        (metodosPgto) => {
+          // tslint:disable-next-line: no-string-literal
+          this.metodosPgto = metodosPgto['data'];
+          console.log(this.metodosPgto);
+        }
+      );
 
-	console.log(this.carrinho);
+    console.log(this.carrinho);
   }
 
   async presentPopoverOpt(idProd: any) {
-	console.log('ev', idProd);
-	const popover = await this.popoverController.create({
-		component: PopoverCarrinhoComponent,
-		cssClass: 'popover-carrinho',
-		// event: ev,
-		translucent: false,
-	});
+    console.log('ev', idProd);
+    const popover = await this.popoverController.create({
+      component: PopoverCarrinhoComponent,
+      cssClass: 'popover-carrinho',
+      // event: ev,
+      translucent: false,
+    });
 
-	const { data } = await popover.onDidDismiss();
-	console.log('data', data);
+    const { data } = await popover.onDidDismiss();
+    console.log('data', data);
 
-	return await popover.present();
+    return await popover.present();
   }
 
   async presentAlertSuccess(ev: any = null) {
-	const alert = await this.alertController.create({
-		header: 'Pedido Concluído',
-		message: 'Seu pedido foi concluído com sucesso!',
-		buttons: ['OK']
+    const alert = await this.alertController.create({
+      header: 'Pedido Concluído',
+      message: 'Seu pedido foi concluído com sucesso!',
+      buttons: ['OK']
 
-	});
-	await alert.present();
+    });
+    await alert.present();
   }
 
   async presentAlertError(ev: any = null, msg) {
-	const alert = await this.alertController.create({
-		header: 'Ocorreu um erro',
-		message: msg,
-		buttons: ['OK']
+    const alert = await this.alertController.create({
+      header: 'Ocorreu um erro',
+      message: msg,
+      buttons: ['OK']
 
-	});
-	await alert.present();
+    });
+    await alert.present();
   }
 
   async presentAlertConfirm(item) {
-	console.log('item', item);
-	const alert = await this.alertController.create({
-		header: 'Remover item',
-		message: `Deseja remover o item ${item.nome} do carrinho?`,
-		buttons: [{
-		text: 'Cancelar',
-		handler: () => {
-			this.alertController.dismiss();
-		}
-		},
-		{
-		text: 'Sim',
-		handler: () => {
-			this.removeItem(item);
-		}
-		}]
+    console.log('item', item);
+    const alert = await this.alertController.create({
+      header: 'Remover item',
+      message: `Deseja remover o item ${item.nome} do carrinho?`,
+      buttons: [{
+        text: 'Cancelar',
+        handler: () => {
+          this.alertController.dismiss();
+        }
+      },
+      {
+        text: 'Sim',
+        handler: () => {
+          this.removeItem(item);
+        }
+      }]
 
-	});
-	await alert.present();
+    });
+    await alert.present();
   }
 
   async presentLoading() {
-	const loading = await this.loadingController.create({
-		cssClass: 'loading-pedido',
-		message: 'Finalizando pedido...',
-	});
-	await loading.present();
+    const loading = await this.loadingController.create({
+      cssClass: 'loading-pedido',
+      message: 'Finalizando pedido...',
+    });
+    await loading.present();
 
-	const { role, data } = await loading.onDidDismiss();
+    const { role, data } = await loading.onDidDismiss();
   }
 
   removeItem(item) {
-	this.carrinho.removerItem(item);
-	localStorage.setItem('carrinho', JSON.stringify(carrinho));
+    this.carrinho.removerItem(item);
+    localStorage.setItem('carrinho', JSON.stringify(carrinho));
   }
 
   finalizaPedido() {
@@ -148,64 +148,88 @@ export class CarrinhoPage {
     this.presentLoading();
 
     const user = JSON.parse(localStorage.getItem('user'));
-    const userEndereco = JSON.parse(localStorage.getItem('userEndereco'))
-    console.log('nao tem user endereco')
-    if(userEndereco) {
-      this.userEndereco = userEndereco;
-    } else {
-      const userEndereco = {
-        rua: this.endereco.logradouro,
-        numero: this.endereco.numero,
-        bairro: this.endereco.bairro,
-        cidade: this.endereco.localidade,
-        uf: this.endereco.uf,
-        pais: 'Brasil',
-        cep: this.endereco.cep
-      };
+    // const userEndereco = JSON.parse(localStorage.getItem('userEndereco'))
 
-      this.userService.findAndCreateUserEndereco(userEndereco)
-        .pipe(takeUntil(this.destroy))
-        .subscribe((result: PorkaoResponse) => {
-          console.log('result')
-          localStorage.setItem('userEndereco', JSON.stringify(result.data));
-        })
-    }
-  
+
+    console.log('nao tem user endereco', this.endereco)
+
+    const userEndereco = {
+      rua: this.endereco.logradouro,
+      numero: this.endereco.numero,
+      bairro: this.endereco.bairro,
+      cidade: this.endereco.localidade,
+      uf: this.endereco.uf,
+      pais: 'Brasil',
+      cep: this.endereco.cep
+    };
+    this.userService.findAndCreateUserEndereco(userEndereco, user)
+      .pipe(takeUntil(this.destroy))
+      .subscribe((result: PorkaoResponse) => {
+        console.log('result')
+        // localStorage.setItem('userEndereco', JSON.stringify(result.data));
+        const userendereco2 = result.data
+
+        const pedido = {
+          "idendereco": userendereco2['idendereco'],
+          "idusuario": user.id,
+          "itens": this.carrinho.returnItensApi(),
+          "vltotal": this.carrinho.getVlTotal(),
+          "vlsubtotal": this.carrinho.getVlSubtotal(),
+          "vltaxa_entrega": this.carrinho.getVlTaxaEntrega(),
+          "idforma_pagamento": this.metodoPagamento
+        }
+    
+        console.log(pedido)
+    
+        this.pedidosService.createPedido(pedido)
+          .subscribe(
+            (pedido) => {
+              console.log('pedido', pedido)
+              this.loadingController.dismiss();
+              this.presentAlertSuccess();
+    
+              this.carrinho.limpaCarrinho();
+              localStorage.removeItem('carrinho');
+    
+              this.router.navigate(['tabs/home']);
+    
+            }, (err) => {
+              console.log('err', err)
+              this.loadingController.dismiss();
+              this.presentAlertError(null, err.message);
+            }
+          )
+
+      })
+
+    // if (userEndereco) {
+    //   this.userEndereco = userEndereco;
+    // } else {
+    //   const userEndereco = {
+    //     rua: this.endereco.logradouro,
+    //     numero: this.endereco.numero,
+    //     bairro: this.endereco.bairro,
+    //     cidade: this.endereco.localidade,
+    //     uf: this.endereco.uf,
+    //     pais: 'Brasil',
+    //     cep: this.endereco.cep
+    //   };
+    //   console.log(userEndereco)
+    //   this.userService.findAndCreateUserEndereco(userEndereco, user)
+    //     .pipe(takeUntil(this.destroy))
+    //     .subscribe((result: PorkaoResponse) => {
+    //       console.log('result')
+    //       localStorage.setItem('userEndereco', JSON.stringify(result.data));
+    //     })
+    // }
+
+
     console.log('userendereco', this.userEndereco)
 
-    const pedido = {
-      "idendereco": this.userEndereco.idendereco,
-      "idusuario": user.id,
-      "itens": this.carrinho.returnItensApi(),
-      "vltotal": this.carrinho.getVlTotal(),
-      "vlsubtotal": this.carrinho.getVlSubtotal(),
-      "vltaxa_entrega": this.carrinho.getVlTaxaEntrega(),
-      "idforma_pagamento": this.metodoPagamento
-    }
-
-    console.log(pedido)
-
-    this.pedidosService.createPedido(pedido)
-      .subscribe(
-        (pedido) => {
-          console.log('pedido', pedido)
-          this.loadingController.dismiss();
-          this.presentAlertSuccess();
-
-          this.carrinho.limpaCarrinho();
-          localStorage.removeItem('carrinho');
-
-          this.router.navigate(['tabs/home']);
-        
-        }, (err) => {
-          console.log('err', err)
-          this.loadingController.dismiss();
-          this.presentAlertError(null, err.message);
-        }
-      )
+    
   }
 
   removerItem(item) {
-	this.carrinho.removerItem(item);
+    this.carrinho.removerItem(item);
   }
 }

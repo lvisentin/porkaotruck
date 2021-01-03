@@ -14,8 +14,8 @@ export class UserService {
 		private httpClient: HttpClient
 	) { }
 
-	findAndCreateUserEndereco(endereco) {
-		const route = `${this.apiUrl}/user/${this.user.id}/enderecos`;
+	findAndCreateUserEndereco(endereco, user) {
+		const route = `${this.apiUrl}/user/${user.id}/enderecos`;
 		return this.httpClient.post(route, endereco);
 	}
 

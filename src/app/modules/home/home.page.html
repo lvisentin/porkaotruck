@@ -32,13 +32,14 @@
   <main id="page-content">
     <header class="searchbar-div">
       <div style="position: relative;">
-        <input #searchbar placeholder="Buscar produtos..." type="text" class="searchbar" (change)="changeBusca($event.target.value)" (focusout)="blurTest($event)">
+        <input #searchbar placeholder="Buscar produtos..." type="text" class="searchbar" (change)="changeBusca($event.target.value)" >
+        <!-- (focusout)="blurTest($event)" -->
         <a *ngIf="searchedItens" (click)="limpaBusca()" style="position: absolute; right: 10px; top: 15%; font-size: 18px; color:#4e4e4e;">
           <ion-icon name="close-outline"></ion-icon>
         </a>
 
       </div>
-      <div id="busca-backdrop" *ngIf="searchedItens || loadingBusca" style="height: 100vh; width: 100%; background: rgba(0,0,0,.6); top: 50px; left: 0px; position: absolute; z-index: 999;"></div>
+      <div id="busca-backdrop" (click)="blurTest($event)" *ngIf="searchedItens || loadingBusca" style="height: 350vh; width: 100%; background: rgba(0,0,0,.6); top: 50px; left: 0px; position: absolute; z-index: 999;"></div>
       <div id="lista-busca" *ngIf="searchedItens || loadingBusca">
 
         <ion-list id="busca-ion-list">

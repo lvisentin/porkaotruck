@@ -31,6 +31,7 @@ export class HomePage {
   public grupoProduto;
   public produtos;
   public endereco;
+  public loadingBusca: boolean = false;
 
   public searchedItens;
 
@@ -103,6 +104,9 @@ export class HomePage {
   }
 
   changeBusca(ev) {
+    // this.limpaBusca();
+    this.searchedItens = null;
+    this.loadingBusca = true;
     console.log(ev)
     const request = {
       "filter": {
@@ -120,8 +124,8 @@ export class HomePage {
       searchedItens.map((item) => {
         this.calculaPrecoItem(item);
       })
-      console.log(searchedItens)
       this.searchedItens = searchedItens;
+      this.loadingBusca = false;
     })
   }
 
@@ -147,6 +151,13 @@ export class HomePage {
   limpaBusca() {
     this.searchedItens = null;
     this.searchbar.nativeElement.value = '';
+  }
+
+  blurTest(event) {
+    console.log('event', event)
+    this.searchedItens = null;
+    this.searchbar.nativeElement.value = '';
+    this.loadingBusca = null;
   }
 
 }

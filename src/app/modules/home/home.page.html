@@ -38,8 +38,10 @@
         </a>
 
       </div>
+      <div id="busca-backdrop" *ngIf="searchedItens?.length > 0" style="height: 100vh; width: 100%; background: rgba(0,0,0,.6); top: 50px; left: 0px; position: absolute; z-index: 999;"></div>
       <div id="lista-busca" *ngIf="searchedItens">
-        <ion-list>
+
+        <ion-list id="busca-ion-list">
           <ion-item *ngFor="let item of searchedItens" lines="none" style="padding: 10px 0;" routerLink="/produto/{{item.id}}">
             <div>
               <img class="img-item-busca" [src]="item.url_image">
@@ -55,6 +57,7 @@
             </div>
           </ion-item>
         </ion-list>
+        <div id="busca-backdrop"></div>
       </div>
     </header>
 

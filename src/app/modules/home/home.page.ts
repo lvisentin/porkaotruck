@@ -113,7 +113,7 @@ export class HomePage {
         "nome": ev,
         "descricao": ev,
       }],		
-      paginate: 5,
+      paginate: 10,
 			page: 1
     };
 

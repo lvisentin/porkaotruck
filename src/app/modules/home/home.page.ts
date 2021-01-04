@@ -109,10 +109,10 @@ export class HomePage {
     this.loadingBusca = true;
     console.log(ev)
     const request = {
-      "filterOr": {
+      "filterOr":[ {
         "nome": ev,
         "descricao": ev,
-      },		
+      }],		
       paginate: 5,
 			page: 1
     };

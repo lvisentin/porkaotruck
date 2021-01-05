@@ -30,9 +30,6 @@
                 {{item.vltotal.toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}}
                 <!-- {{(item.preco[0].preco * (1 - (item.preco[0].desconto_porc / 100))).toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'})}} -->
               </p>
-              <a (click)="removeItem(item)">
-                <ion-icon name="trash-outline"></ion-icon>
-              </a>
             </div>
           </ion-item>
         </ion-list>

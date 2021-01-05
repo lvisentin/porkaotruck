@@ -55,6 +55,7 @@ export class CarrinhoPage {
 
     this.userEndereco = JSON.parse(localStorage.getItem('userEndereco'));
     this.endereco = JSON.parse(localStorage.getItem('endereco'));
+    console.log('endereco', this.endereco)
 
   }
 
@@ -188,27 +189,6 @@ export class CarrinhoPage {
           )
 
       })
-
-    // if (userEndereco) {
-    //   this.userEndereco = userEndereco;
-    // } else {
-    //   const userEndereco = {
-    //     rua: this.endereco.logradouro,
-    //     numero: this.endereco.numero,
-    //     bairro: this.endereco.bairro,
-    //     cidade: this.endereco.localidade,
-    //     uf: this.endereco.uf,
-    //     pais: 'Brasil',
-    //     cep: this.endereco.cep
-    //   };
-    //   console.log(userEndereco)
-    //   this.userService.findAndCreateUserEndereco(userEndereco, user)
-    //     .pipe(takeUntil(this.destroy))
-    //     .subscribe((result: PorkaoResponse) => {
-    //       console.log('result')
-    //       localStorage.setItem('userEndereco', JSON.stringify(result.data));
-    //     })
-    // }
   }
 
   removerItem(item) {

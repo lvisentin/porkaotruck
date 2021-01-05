@@ -7,7 +7,7 @@
 <ion-content [fullscreen]="true">
   <main *ngIf="user; else noUser">
     <ng-container *ngIf="pedidos && pedidos.length > 0; else noPedidos">
-      <ion-item class="item-pedido" *ngFor="let pedido of pedidos" lines="none">
+      <ion-item class="item-pedido" *ngFor="let pedido of pedidos" lines="none" (click)="goToPedido(pedido.id)">
         <div class="div-pedido-data">
           <div class="data">
             <p class="data-dia">{{pedido.dia}}</p>
@@ -22,7 +22,7 @@
           <p class="div-pedido-desc-item">...</p>
         </div>
         <div class="div-pedido-actions">
-          <button class="btn-pedido-detalhes" (click)="goToPedido(pedido.id)">
+          <button class="btn-pedido-detalhes">
             Detalhes
           </button>
         </div>

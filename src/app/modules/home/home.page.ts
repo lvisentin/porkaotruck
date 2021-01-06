@@ -21,7 +21,9 @@ export class HomePage {
   public slideOpts = {
     initialSlide: 1,
     slidesPerView: 2,
-    speed: 400
+    speed: 400,
+    resistance: false,
+    freeMode: true,
   }
 
   public categoriaSelecionada: number;

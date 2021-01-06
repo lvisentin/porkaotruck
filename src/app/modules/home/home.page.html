@@ -118,7 +118,8 @@
       <section class="opcoes-categoria">
         <ion-list>
           <ng-container *ngFor="let categoria of categorias">
-            <ion-item class="item" lines="none" *ngFor="let produto of categoria.produtos"
+            <ng-container *ngIf="categoria.produtos.length > 0; else noProdCategoria">
+              <ion-item class="item" lines="none" *ngFor="let produto of categoria.produtos"
               routerLink="/produto/{{produto.id}}" detail="false"
               [hidden]="categoriaSelecionada != produto.idcategoria">
               <aside style="width: 60%;">
@@ -147,6 +148,13 @@
               [style.background-image]="'url('+produto.url_image+')'">
               </aside>
             </ion-item>
+
+            </ng-container>
+            <ng-template #noProdCategoria >
+              <div [hidden]="categoriaSelecionada != categoria.id">
+                <p>Não encontramos nenhum produto nessa categoria</p>
+              </div>
+            </ng-template>
           </ng-container>
         </ion-list>
       </section>

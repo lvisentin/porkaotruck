@@ -33,6 +33,7 @@ export class HomePage {
   public grupoProduto;
   public produtos;
   public endereco;
+  public taxaEntrega;
   public loadingBusca: boolean = false;
 
   public searchedItens;
@@ -56,7 +57,7 @@ export class HomePage {
 
   ionViewDidEnter() {
     if (!localStorage.getItem('taxaEntrega') || !localStorage.getItem('endereco')) { this.router.navigate(['tabs/home/endereco']) }
-    else { this.endereco = JSON.parse(localStorage.getItem('endereco')) }
+    else { this.endereco = JSON.parse(localStorage.getItem('endereco')); this.taxaEntrega = JSON.parse(localStorage.getItem('taxaEntrega')) }
     // this.cdr.detectChanges();
     console.log('ion view did enter home')
     

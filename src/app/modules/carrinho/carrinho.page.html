@@ -35,7 +35,7 @@
         </header>
         <main id="list-itens-carrinho">
           <ion-list *ngFor="let item of carrinho.itens">
-            <ion-item class="ion-no-padding carrinho-item">
+            <ion-item class="ion-no-padding carrinho-item" routerLink="/produto/{{item.id}}">
               <div style="display: flex;align-items: center;">
                 <div>
                   <p class="carrinho-item-nome">{{item.qtd}}x - {{item.nome}}</p>

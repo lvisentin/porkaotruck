@@ -17,14 +17,15 @@
       </ion-button> -->
       <div id="select-enderecos">
         <p class="label-endereco">Entregar em:</p>
-        <p class="name-endereco" *ngIf="endereco">
+        <p class="name-endereco" *ngIf="endereco" style="margin-bottom: 5px;">
           <span>
-            {{endereco.logradouro}} - {{endereco.bairro}}
+            {{endereco.logradouro}}, {{endereco.numero}}- {{endereco.bairro}}
           </span>
           <a routerLink="endereco">
             <ion-icon name="chevron-down-outline"></ion-icon>
           </a>
         </p>
+        <p class="label-tempo-entrega" *ngIf="taxaEntrega" style="margin-top: 0px;">Tempo de entrega: {{taxaEntrega.tempo_min}}min - {{taxaEntrega.tempo_max}}min </p>
       </div>
     </ion-toolbar>
   </ion-header>

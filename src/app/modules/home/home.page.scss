@@ -59,6 +59,7 @@
     }
 
     .slide-name {
+        font-weight: bold;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
@@ -66,7 +67,7 @@
 
     .slide-card-content {
         padding: 5px 20px;
-        height: 80px;
+        height: 60px;
         display: flex;
         align-items: center;
 
@@ -218,6 +219,11 @@
     .label-endereco {
         font-size: 14px;
         font-weight: bold;
+        font-family: "Montserrat", sans-serif;
+        margin-bottom: 5px;
+    }
+    .label-tempo-entrega {
+        font-size: 14px;
         font-family: "Montserrat", sans-serif;
         margin-bottom: 5px;
     }

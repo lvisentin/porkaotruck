@@ -11,14 +11,14 @@ import { EnderecosPage } from './enderecos/enderecos.page';
 
 @NgModule({
   imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    ProfilePageRoutingModule
+	CommonModule,
+	FormsModule,
+	IonicModule,
+	ProfilePageRoutingModule
   ],
   declarations: [
-    ProfilePage,
-    EnderecosPage
+	ProfilePage,
+	EnderecosPage
   ]
 })
 export class ProfilePageModule { }

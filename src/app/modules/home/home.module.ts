@@ -10,16 +10,16 @@ import { EnderecoPage } from '../endereco/endereco.page';
 
 @NgModule({
   imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ExploreContainerComponentModule,
-    HomePageRoutingModule
+	IonicModule,
+	CommonModule,
+	FormsModule,
+	ReactiveFormsModule,
+	ExploreContainerComponentModule,
+	HomePageRoutingModule
   ],
   declarations: [
-    HomePage,
-    EnderecoPage
+	HomePage,
+	EnderecoPage
   ]
 })
 export class HomePageModule { }

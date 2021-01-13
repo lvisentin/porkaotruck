@@ -16,7 +16,7 @@ export class ListaPedidosPage implements OnInit {
 
 	constructor(
 		private pedidosService: PedidosService,
-		private router: Router
+		private router: Router,
 	) { }
 
 	ngOnInit() {

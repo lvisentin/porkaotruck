@@ -9,159 +9,161 @@ import { takeUntil } from 'rxjs/operators';
 import { PorkaoResponse, SearchResponse } from 'src/app/interfaces/response.model';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+	selector: 'app-home',
+	templateUrl: 'home.page.html',
+	styleUrls: ['home.page.scss'],
 })
 
 export class HomePage {
 
-  @ViewChild('searchbar') searchbar;
+	@ViewChild('searchbar') searchbar;
 
-  public slideOpts = {
-    initialSlide: 1,
-    slidesPerView: 2,
-    speed: 400,
-    resistance: false,
-    freeMode: true,
-  }
+	public slideOpts = {
+		initialSlide: 1,
+		slidesPerView: 2,
+		speed: 400,
+		resistance: false,
+		freeMode: true,
+	};
 
-  public categoriaSelecionada: number;
-  public combos: Produto[];
-  public categorias: Categoria[];
-  public categoriasShowable: Categoria[];
-  public grupoProduto;
-  public produtos;
-  public endereco;
-  public taxaEntrega;
-  public loadingBusca: boolean = false;
+	public categoriaSelecionada: number;
+	public combos: Produto[];
+	public categorias: Categoria[];
+	public categoriasShowable: Categoria[];
+	public grupoProduto;
+	public produtos;
+	public endereco;
+	public taxaEntrega;
+	public loadingBusca = false;
 
-  public searchedItens;
+	public searchedItens;
 
-  private destroy: Subject<boolean> = new Subject<boolean>();
+	private destroy: Subject<boolean> = new Subject<boolean>();
 
-  constructor(
-    private produtosService: ProdutosService,
-    private categoriasService: CategoriasService,
-    private router: Router,
-  ) { }
+	constructor(
+		private produtosService: ProdutosService,
+		private categoriasService: CategoriasService,
+		private router: Router,
+	) { }
 
-  ngOnDestroy() {
-    this.destroy.next(true);
-    this.destroy.unsubscribe();
-  }
+	ngOnDestroy() {
+		this.destroy.next(true);
+		this.destroy.unsubscribe();
+	}
 
-  ngOnInit() {
-    console.log('on init home')
-  }
+	ngOnInit() {
+		console.log('on init home');
+	}
 
-  ionViewDidEnter() {
-    if (!localStorage.getItem('taxaEntrega') || !localStorage.getItem('endereco')) { this.router.navigate(['tabs/home/endereco']) }
-    else { this.endereco = JSON.parse(localStorage.getItem('endereco')); this.taxaEntrega = JSON.parse(localStorage.getItem('taxaEntrega')) }
-    // this.cdr.detectChanges();
-    console.log('ion view did enter home')
-    
-    this.categoriaSelecionada = 1;
-    this.getCategorias();
-    this.getCombos();
-  }
+	ionViewDidEnter() {
+		if (!localStorage.getItem('taxaEntrega') || !localStorage.getItem('endereco')) { this.router.navigate(['tabs/home/endereco']); }
+		else { this.endereco = JSON.parse(localStorage.getItem('endereco')); this.taxaEntrega = JSON.parse(localStorage.getItem('taxaEntrega')); }
+		// this.cdr.detectChanges();
+		console.log('ion view did enter home');
 
-  selectCategoria(categoria) {
-    this.categoriaSelecionada = categoria;
-  }
+		this.categoriaSelecionada = 1;
+		this.getCategorias();
+		this.getCombos();
+	}
 
-  getCategorias() {
-    const fields = { "produtos": ["nome", "descricao", "url_image"] };
-    const filter = { "showable": true }
-    this.categoriasService
-    .getCategorias(filter, fields)
-    .subscribe(
-      (data) => {
-        const categorias = data['data'].data;
-        console.log('categorias', categorias)
-        categorias.map((categoria) => {
-          categoria.produtos.map((produto) => {
-            this.calculaPrecoItem(produto);
-          })
-        })
-        this.categorias = categorias;
-        console.log(this.categorias)
-      }
-    )
-  }
+	selectCategoria(categoria) {
+		this.categoriaSelecionada = categoria;
+	}
 
-  getCombos() {
-    const filter = { "categoria": 31 };
-    this.produtosService.getProdutos(filter).subscribe(
-      (data) => {
-        const combos: Array<Produto> = data['data'].data;
-        console.log('combos', combos)
-        combos.map((produto) => {
-          this.calculaPrecoItem(produto);
-          console.log('produto', produto)
-        });
-        this.combos = combos;
-        console.log(combos)
-      }
-    )
-  }
+	getCategorias() {
+		const fields = { produtos: ['nome', 'descricao', 'url_image'] };
+		const filter = { showable: true };
+		this.categoriasService
+		.getCategorias(filter, fields)
+		.subscribe(
+			(data) => {
+				// tslint:disable-next-line: no-string-literal
+				const categorias = data['data'].data;
+				console.log('categorias', categorias);
+				categorias.map((categoria) => {
+					categoria.produtos.map((produto) => {
+						this.calculaPrecoItem(produto);
+					});
+				});
+				this.categorias = categorias;
+				console.log(this.categorias);
+			}
+		);
+	}
 
-  changeBusca(ev) {
-    // this.limpaBusca();
-    this.searchedItens = null;
-    this.loadingBusca = true;
-    console.log(ev)
-    const request = {
-      "filterOr":[ {
-        "nome": ev,
-        "descricao": ev,
-      }],		
-      paginate: 10,
+	getCombos() {
+		const filter = { categoria: 31 };
+		this.produtosService.getProdutos(filter).subscribe(
+			(data) => {
+				const combos: Array<Produto> = data.data.data;
+				console.log('combos', combos);
+				combos.map((produto) => {
+					this.calculaPrecoItem(produto);
+					console.log('produto', produto);
+				});
+				this.combos = combos;
+				console.log(combos);
+			}
+		);
+	}
+
+	changeBusca(ev) {
+		// this.limpaBusca();
+		this.searchedItens = null;
+		this.loadingBusca = true;
+		console.log(ev);
+		const request = {
+			filterOr: [ {
+				nome: ev,
+				descricao: ev,
+			}],
+			paginate: 10,
 			page: 1
-    };
+		};
 
-    this.produtosService
-    .produtosSearch(request)
-    .pipe(takeUntil(this.destroy))
-    .subscribe((result: SearchResponse) => {
-      const searchedItens = result.data['data']
-      searchedItens.map((item) => {
-        this.calculaPrecoItem(item);
-      })
-      this.searchedItens = searchedItens;
-      this.loadingBusca = false;
-    })
-  }
+		this.produtosService
+		.produtosSearch(request)
+		.pipe(takeUntil(this.destroy))
+		.subscribe((result: SearchResponse) => {
+			// tslint:disable-next-line: no-string-literal
+			const searchedItens = result.data['data'];
+			searchedItens.map((item) => {
+				this.calculaPrecoItem(item);
+			});
+			this.searchedItens = searchedItens;
+			this.loadingBusca = false;
+		});
+	}
 
-  calculaPrecoItem(item) {
+	calculaPrecoItem(item) {
 		if (item.preco[0].desconto_porc) {
-      const discountMultiplier =  1 - (item.preco[0].desconto_porc / 100)
+			const discountMultiplier =  1 - (item.preco[0].desconto_porc / 100);
 			item.vltotal = (item.preco[0].preco * discountMultiplier);
 		} else if (item.preco[0].desconto_num) {
 			item.vltotal = (item.preco[0].preco - item.preco[0].desconto_num);
 		} else {
 			item.vltotal = item.preco[0].preco;
 		}
-    
-    if (item.adicionais) {
+
+		if (item.adicionais) {
 			item.adicionais.map((adicional) => {
 				item.vltotal += adicional.adicional.preco[0].preco;
-			})
+			});
 		}
-    console.log('item', item.vltotal)
+		console.log('item', item.vltotal);
 		return item.vltotal;
-  }
-  
-  limpaBusca() {
-    this.searchedItens = null;
-    this.searchbar.nativeElement.value = '';
-  }
+	}
 
-  blurTest(event) {
-    console.log('event', event)
-    this.searchedItens = null;
-    this.searchbar.nativeElement.value = '';
-    this.loadingBusca = null;
-  }
+	limpaBusca() {
+		this.searchedItens = null;
+		this.searchbar.nativeElement.value = '';
+	}
+
+	blurTest(event) {
+		console.log('event', event);
+		this.searchedItens = null;
+		this.searchbar.nativeElement.value = '';
+		this.loadingBusca = null;
+	}
 
 }

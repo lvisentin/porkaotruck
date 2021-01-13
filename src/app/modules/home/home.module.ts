@@ -1,3 +1,4 @@
+import { EnderecoPageModule } from './../endereco/endereco.module';
 import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -15,11 +16,11 @@ import { EnderecoPage } from '../endereco/endereco.page';
     FormsModule,
     ReactiveFormsModule,
     ExploreContainerComponentModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+    EnderecoPageModule
   ],
   declarations: [
     HomePage,
-    EnderecoPage
   ]
 })
 export class HomePageModule { }
